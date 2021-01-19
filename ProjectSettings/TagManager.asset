@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - barrierBlue
+  - wall
+  - coin
+  - water
+  - wallRight
+  - wallLeft
   layers:
   - Default
   - TransparentFX
