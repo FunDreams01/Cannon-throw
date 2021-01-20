@@ -6,8 +6,15 @@ public class CharacterController : MonoBehaviour
 {
     Animator anim;
     GameObject myCollider;
+    ColliderFix IdleColFix;
+    ColliderFix FlyColFix;
+    ColliderFix WRColFix;
+    ColliderFix WLColFix;
+    ColliderFix SwimColFix;
 
-        private static CharacterController _instance;
+    
+
+    private static CharacterController _instance;
     public static CharacterController Instance{
 
         get {
@@ -35,6 +42,13 @@ public class CharacterController : MonoBehaviour
     {
         anim=this.GetComponent<Animator>();
         myCollider=this.transform.Find("collider").gameObject;
+
+      IdleColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(90,0,0));
+      FlyColFix= new ColliderFix("Idle", new Vector3(0,1.22f,-1.18f), new Vector3(90,0,0));
+      WLColFix= new ColliderFix("Idle", new Vector3(-0.13f,0,0.16f), new Vector3(-90,0,0));
+      WRColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(-90,0,0));
+      SwimColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(0,0,0));
+      
         Idle();
     }
 
@@ -46,25 +60,35 @@ public class CharacterController : MonoBehaviour
     public void Idle(){
        resetAnimParam();
        anim.SetBool("isIdle",true);
+       myCollider.transform.position= transform.TransformPoint(IdleColFix.position);
+       myCollider.transform.Rotate(IdleColFix.rotation);
     }
 
     public void Fly(){
         resetAnimParam();
         anim.SetBool("isFlying",true);
+        myCollider.transform.position= transform.TransformPoint(FlyColFix.position);
+        myCollider.transform.Rotate(FlyColFix.rotation);
     }
 
     public void WalkLeft(){
         resetAnimParam();
         anim.SetBool("isWalkingLeft",true);
+        myCollider.transform.position= transform.TransformPoint(WLColFix.position);
+        myCollider.transform.Rotate(WLColFix.rotation);
     }
 
     public void WalkRight(){
         resetAnimParam();
         anim.SetBool("isWalkingRight",true);
+        myCollider.transform.position= transform.TransformPoint(WRColFix.position);
+        myCollider.transform.Rotate(WRColFix.rotation);
     }
 
     public void Swim(){
         anim.SetBool("isSwimming",true);
+        myCollider.transform.position= transform.TransformPoint(SwimColFix.position);
+        myCollider.transform.Rotate(SwimColFix.rotation);
     }
     
     void resetAnimParam(){
