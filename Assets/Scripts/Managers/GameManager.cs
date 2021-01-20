@@ -41,9 +41,23 @@ public void Lost(){
 }
 
 public void EndPointReached(){
-    // activate swimming animation of player
+    CharacterController.Instance.Swim();
     UIManager.Instance.Won();
 }
 
+public void Idle(){
+    CharacterController.Instance.Idle();
+}
+
+public void Fly(){
+    CharacterController.Instance.Fly();
+}
+public void WalkLeft(){
+    CharacterController.Instance.WalkLeft();
+}
+
+public void WalkRight(){
+    CharacterController.Instance.WalkRight();
+}
 
 }
