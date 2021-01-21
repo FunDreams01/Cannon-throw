@@ -10,6 +10,9 @@ TagManager:
   - water
   - wallRight
   - wallLeft
+  - good
+  - normal
+  - perfect
   layers:
   - Default
   - TransparentFX
