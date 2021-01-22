@@ -11,7 +11,7 @@ public class ForceSelector : MonoBehaviour {
 
     [Header("Arrow Speed")]
     public float animSpeed = 1;
-    bool forceSlected = false;
+    public bool forceSlected = false;
     GameObject myArrow;
     Animator arrowAnim;
     GameObject myRaycast;
@@ -27,20 +27,14 @@ public class ForceSelector : MonoBehaviour {
         arrowAnim.speed = animSpeed;
     }
 
-    // Update is called once per frame
-    void Update () {
-        if (!forceSlected) {
-            if (Input.GetKey (KeyCode.Return)) {
-                selectForce ();
-            }
-        }
-    }
-
-    void selectForce () {
+   public void selectForce () {
         arrowAnim.enabled = false;
         forceSlected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
+           //to be changed to ui behavior of orce selection
             Debug.Log(hit.transform.gameObject.tag);
+            // cannon stops moving and shoots character
         }
     }
+
 }
