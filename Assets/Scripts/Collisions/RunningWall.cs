@@ -11,6 +11,7 @@ public class RunningWall : MonoBehaviour
             }else if(this.gameObject.tag == "wallRight"){
                 GameManager.Instance.WalkRight();
             }
+            GameManager.Instance.StartWalk();
         }
     }
 
@@ -18,6 +19,7 @@ public class RunningWall : MonoBehaviour
         if(other.gameObject.tag == "Player"){
             GameManager.Instance.StopWalk();
             GameManager.Instance.Fly();
+            GetComponent<Collider>().enabled=false;
             //redirect to trajectory
         }
     }

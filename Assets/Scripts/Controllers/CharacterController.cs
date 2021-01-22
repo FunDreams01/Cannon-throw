@@ -11,7 +11,7 @@ public class CharacterController : MonoBehaviour
     ColliderFix WRColFix;
     ColliderFix WLColFix;
     ColliderFix SwimColFix;
-    bool isWallWalking=false;
+     bool isWallWalking=false;
 
     public float wallWalkingSpeed;
     Rigidbody rb;
@@ -68,6 +68,10 @@ public class CharacterController : MonoBehaviour
     public void StopWallWalking(){
         isWallWalking=false;
     }
+
+    public void ActivateWallWalking(){
+        isWallWalking=true;
+    }
     public void Idle(){
        anim.SetInteger("animParam",0);
        myCollider.transform.position= transform.TransformPoint(IdleColFix.position);
@@ -75,21 +79,21 @@ public class CharacterController : MonoBehaviour
     }
 
     public void Fly(){
+        Debug.Log("fly");
         anim.SetInteger("animParam",1);
         myCollider.transform.position= transform.TransformPoint(FlyColFix.position);
         myCollider.transform.Rotate(FlyColFix.rotation);
     }
 
     public void WalkLeft(){
+        Debug.Log("walk left");
        anim.SetInteger("animParam",2);
-        isWallWalking=true;
         myCollider.transform.position= transform.TransformPoint(WLColFix.position);
         myCollider.transform.Rotate(WLColFix.rotation);
     }
 
     public void WalkRight(){
        anim.SetInteger("animParam",3);
-        isWallWalking=true;
         myCollider.transform.position= transform.TransformPoint(WRColFix.position);
         myCollider.transform.Rotate(WRColFix.rotation);
     }

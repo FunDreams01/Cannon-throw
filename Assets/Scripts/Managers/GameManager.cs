@@ -63,5 +63,7 @@ public void WalkRight(){
 public void StopWalk(){
     CharacterController.Instance.StopWallWalking();
 }
-
+public void StartWalk(){
+    CharacterController.Instance.ActivateWallWalking();
+}
 }
