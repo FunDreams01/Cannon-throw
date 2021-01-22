@@ -16,6 +16,7 @@ public class RunningWall : MonoBehaviour
 
     private void OnCollisionExit(Collision other){
         if(other.gameObject.tag == "Player"){
+            GameManager.Instance.StopWalk();
             GameManager.Instance.Fly();
             //redirect to trajectory
         }

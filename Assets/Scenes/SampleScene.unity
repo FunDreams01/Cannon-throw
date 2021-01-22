@@ -1711,7 +1711,7 @@ MonoBehaviour:
   normalForce: 5
   goodForce: 10
   perfectForce: 20
-  animSpeed: 1
+  animSpeed: 1.5
   forceSlected: 0
 --- !u!108 &705507994 stripped
 Light:
@@ -2543,9 +2543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faaca45650eb9274593b16a83c43072a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  epsilon: 0.2
-  rotationSpeed: 0
-  limitRotDegree: 0
+  dist: {fileID: 0}
+  pos: {fileID: 0}
+  epsilon: 5
+  rotationSpeed: 400
+  limitRotDegree: 25
 --- !u!1 &1069314901
 GameObject:
   m_ObjectHideFlags: 0
@@ -5541,8 +5543,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.89400816, y: 8.793199, z: 2}
-  m_Center: {x: 0.00013446808, y: 4.380568, z: -0.000017642975}
+  m_Size: {x: 1.3138473, y: 8.793199, z: 2}
+  m_Center: {x: 0.21005404, y: 4.380568, z: -0.00001764346}
 --- !u!114 &163680694100947433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6011,6 +6013,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 513164577893267648, guid: c7e2174e9bd95c344aaa3cb20eec510b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 513164577893267648, guid: c7e2174e9bd95c344aaa3cb20eec510b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 513164577893267648, guid: c7e2174e9bd95c344aaa3cb20eec510b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 513164577893267648, guid: c7e2174e9bd95c344aaa3cb20eec510b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 513164577893267648, guid: c7e2174e9bd95c344aaa3cb20eec510b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1806324743804886519, guid: c7e2174e9bd95c344aaa3cb20eec510b,
         type: 3}
@@ -6784,7 +6811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8296172668816355260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.06, y: 2.3, z: -33.59}
+  m_LocalPosition: {x: 26.54, y: 4.88, z: -41.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7606006757043725761}
@@ -7220,6 +7247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08368399ef912934abecd9c3259c4ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallWalkingSpeed: 3
 --- !u!1 &8404232990791346900
 GameObject:
   m_ObjectHideFlags: 0

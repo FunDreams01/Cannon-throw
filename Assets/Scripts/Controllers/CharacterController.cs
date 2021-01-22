@@ -11,7 +11,10 @@ public class CharacterController : MonoBehaviour
     ColliderFix WRColFix;
     ColliderFix WLColFix;
     ColliderFix SwimColFix;
+    bool isWallWalking=false;
 
+    public float wallWalkingSpeed;
+    Rigidbody rb;
     
 
     private static CharacterController _instance;
@@ -38,65 +41,63 @@ public class CharacterController : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         anim=this.GetComponent<Animator>();
         myCollider=this.transform.Find("collider").gameObject;
-
-      IdleColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(90,0,0));
-      FlyColFix= new ColliderFix("Idle", new Vector3(0,1.22f,-1.18f), new Vector3(90,0,0));
-      WLColFix= new ColliderFix("Idle", new Vector3(-0.13f,0,0.16f), new Vector3(-90,0,0));
-      WRColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(-90,0,0));
-      SwimColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(0,0,0));
+        rb=myCollider.GetComponent<Rigidbody>();
+        IdleColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(90,0,0));
+        FlyColFix= new ColliderFix("Idle", new Vector3(0,1.22f,-1.18f), new Vector3(90,0,0));
+        WLColFix= new ColliderFix("Idle", new Vector3(-0.13f,0,0.16f), new Vector3(-90,0,0));
+        WRColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(-90,0,0));
+        SwimColFix= new ColliderFix("Idle", new Vector3(0,1.3f,-1.18f), new Vector3(0,0,0));
       
         Idle();
     }
 
     // Update is called once per frame
     void Update() {
-        
+        if(isWallWalking){
+            StartWallWalking();
+        }
     }
 
+    void StartWallWalking(){
+         transform.Translate(Vector3.forward*wallWalkingSpeed*Time.deltaTime);      
+    }
+
+    public void StopWallWalking(){
+        isWallWalking=false;
+    }
     public void Idle(){
-       resetAnimParam();
-       anim.SetBool("isIdle",true);
+       anim.SetInteger("animParam",0);
        myCollider.transform.position= transform.TransformPoint(IdleColFix.position);
        myCollider.transform.Rotate(IdleColFix.rotation);
     }
 
     public void Fly(){
-        resetAnimParam();
-        anim.SetBool("isFlying",true);
+        anim.SetInteger("animParam",1);
         myCollider.transform.position= transform.TransformPoint(FlyColFix.position);
         myCollider.transform.Rotate(FlyColFix.rotation);
     }
 
     public void WalkLeft(){
-        resetAnimParam();
-        anim.SetBool("isWalkingLeft",true);
+       anim.SetInteger("animParam",2);
+        isWallWalking=true;
         myCollider.transform.position= transform.TransformPoint(WLColFix.position);
         myCollider.transform.Rotate(WLColFix.rotation);
     }
 
     public void WalkRight(){
-        resetAnimParam();
-        anim.SetBool("isWalkingRight",true);
+       anim.SetInteger("animParam",3);
+        isWallWalking=true;
         myCollider.transform.position= transform.TransformPoint(WRColFix.position);
         myCollider.transform.Rotate(WRColFix.rotation);
     }
 
     public void Swim(){
-        anim.SetBool("isSwimming",true);
+       anim.SetInteger("animParam",4);
         myCollider.transform.position= transform.TransformPoint(SwimColFix.position);
         myCollider.transform.Rotate(SwimColFix.rotation);
     }
     
-    void resetAnimParam(){
-        anim.SetBool("isIdle",false);
-        anim.SetBool("isFlying",false);
-        anim.SetBool("isWalkingRight",false);
-        anim.SetBool("isWalkingLeft",false);
-        anim.SetBool("isSwimming",false);
-    }
-
 }

@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CannonController : MonoBehaviour {
+    public Text dist;
+    public Text pos;
     GameObject cannon;
     Vector2 beginTouchPos;
     bool touchDidMove = false;
-    public float epsilon = 0.2f;
-    public float rotationSpeed;
-    public float limitRotDegree;
+    public float epsilon = 5;
+    public float rotationSpeed = 40;
+    public float limitRotDegree = 25;
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
@@ -26,10 +29,22 @@ public class CannonController : MonoBehaviour {
 
                 case TouchPhase.Moved:
                     touchDidMove = true;
-                    if ((touch.position.x > beginTouchPos.x) && ((touch.position.y - beginTouchPos.y) < epsilon)) {
-                        cannon.transform.Rotate (0,1*rotationSpeed*Time.deltaTime, 0);
-                    } else if ((touch.position.x < beginTouchPos.x) && ((touch.position.y - beginTouchPos.y) < epsilon)) {
-                        cannon.transform.Rotate (0, -1*rotationSpeed*Time.deltaTime, 0);
+                    //swipe right
+                    if ((touch.position.x > beginTouchPos.x)) {
+                         if(cannon.transform.eulerAngles.y< limitRotDegree || cannon.transform.eulerAngles.y>=(360-limitRotDegree-1)){
+                        cannon.transform.Rotate (0, 1 * rotationSpeed*Time.deltaTime, 0);
+                        pos.text=cannon.transform.eulerAngles.y.ToString();
+                        beginTouchPos=touch.position;
+                        }
+                    
+                    }
+                    //swipe left
+                    if ((touch.position.x < beginTouchPos.x)) {
+                        if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) ||  cannon.transform.eulerAngles.y <= limitRotDegree +1 ) {
+                            cannon.transform.Rotate (0, -1 * rotationSpeed*Time.deltaTime, 0);
+                            pos.text=cannon.transform.eulerAngles.y.ToString();
+                            beginTouchPos=touch.position;
+                        }
                     }
                     break;
             }
