@@ -6,7 +6,7 @@ public class TrajectoryNextDestination : MonoBehaviour
 {
      GameObject [] go;
      [SerializeField]
-     GameObject NextDestination;
+    public GameObject NextDestination;
     // Start is called before the first frame update
     void Start(){
         int i=0;
@@ -17,6 +17,13 @@ public class TrajectoryNextDestination : MonoBehaviour
                 break;
             }
             i++;
+        }
+    }
+
+     private void OnTriggerEnter(Collider other)
+    {
+        if(this.gameObject.tag=="ring" && other.gameObject.tag=="Player"){
+            GameManager.Instance.SetDestination(NextDestination);
         }
     }
 

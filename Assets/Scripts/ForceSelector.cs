@@ -32,6 +32,7 @@ public class ForceSelector : MonoBehaviour {
         forceSlected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
            //to be changed to ui behavior of orce selection
+           GameManager.Instance.launchCharacter();
             Debug.Log(hit.transform.gameObject.tag);
             // cannon stops moving and shoots character
         }

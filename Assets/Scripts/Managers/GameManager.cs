@@ -66,4 +66,10 @@ public void StopWalk(){
 public void StartWalk(){
     CharacterController.Instance.ActivateWallWalking();
 }
+public void SetDestination(GameObject go){
+    CharacterController.Instance.setDestination(go);
+}
+public void launchCharacter(){
+    CharacterController.Instance.launchCharacter();
+}
 }
