@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RunningWall : MonoBehaviour
 {
+    public int i;
     private void OnCollisionEnter(Collision other){
         if(other.gameObject.tag == "Player"){
             if(this.gameObject.tag == "wallLeft"){
@@ -20,7 +21,7 @@ public class RunningWall : MonoBehaviour
             GameManager.Instance.StopWalk();
             GameManager.Instance.Fly();
             GetComponent<Collider>().enabled=false;
-            //redirect to trajectory
+            GameManager.Instance.RedirectToPath(i);
         }
     }
 }

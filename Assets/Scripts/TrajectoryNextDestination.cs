@@ -23,7 +23,7 @@ public class TrajectoryNextDestination : MonoBehaviour
      private void OnTriggerEnter(Collider other)
     {
         if(this.gameObject.tag=="ring" && other.gameObject.tag=="Player"){
-            GameManager.Instance.SetDestination(NextDestination);
+            //boost
         }
     }
 

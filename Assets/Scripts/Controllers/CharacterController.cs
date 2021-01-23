@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PathCreation;
+namespace PathCreation.Examples{}
 
 public class CharacterController : MonoBehaviour {
-    Animator anim;
+    public PathCreator [] pathList;
+     Animator anim;
     GameObject myCollider;
     ColliderFix IdleColFix;
     ColliderFix FlyColFix;
@@ -17,9 +20,9 @@ public class CharacterController : MonoBehaviour {
 
     public float wallWalkingSpeed;
 
-    GameObject destination;
-    Rigidbody rb;
-    bool launch =true;
+    bool launch = true;
+    GameObject myCharacter;
+    GameObject body;
 
     private static CharacterController _instance;
     public static CharacterController Instance {
@@ -46,16 +49,17 @@ public class CharacterController : MonoBehaviour {
     }
     // Start is called before the first frame update
     void Start () {
-        anim = this.GetComponent<Animator> ();
-        myCollider = this.transform.Find ("collider").gameObject;
-        rb = myCollider.GetComponent<Rigidbody> ();
-        IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (90, 0, 0));
-        FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 1.22f, -1.18f), new Vector3 (90, 0, 0));
-        WLColFix = new ColliderFix ("Idle", new Vector3 (-0.13f, 0, 0.16f), new Vector3 (-90, 0, 0));
-        WRColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (-90, 0, 0));
+        body = this.transform.Find ("body").gameObject;
+        myCharacter = body.transform.Find ("myCharacter").gameObject;
+        myCollider = body.transform.Find ("collider").gameObject;
+        anim = myCharacter.GetComponent<Animator> ();
+        IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.063f), new Vector3 (90, 0, 0));
+        FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.17f), new Vector3 (90, 0, 0));
+        WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
+        WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
         GameObject firstCannon = TrajectoryManager.Instance.cannons_rings_endpoints[0];
-        transform.position = firstCannon.transform.position+ new Vector3(offsetX,offsetY,offsetZ);
+        transform.position = firstCannon.transform.position + new Vector3 (offsetX, offsetY, offsetZ);
         Idle ();
     }
 
@@ -65,12 +69,12 @@ public class CharacterController : MonoBehaviour {
             StartWallWalking ();
         }
 
-        if(launch){
-            transform.Translate(0,0,0.1f);
-            
-        }
+        /*if(launch){
+        }*/
     }
-
+    public void RedirectToPath (int i) {
+        this.GetComponent<PathFollower>().pathCreator=pathList[0];
+    }
     void StartWallWalking () {
         transform.Translate (Vector3.forward * wallWalkingSpeed * Time.deltaTime);
     }
@@ -114,13 +118,8 @@ public class CharacterController : MonoBehaviour {
         myCollider.transform.Rotate (SwimColFix.rotation);
     }
 
-    public void setDestination(GameObject go){
-        destination=go;
-        transform.LookAt(destination.transform);
-    }
-
-    public void launchCharacter(){
-        launch=true;
+    public void launchCharacter () {
+        launch = true;
     }
 
 }

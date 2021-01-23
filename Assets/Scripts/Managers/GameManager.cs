@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using PathCreation;
 public class GameManager : MonoBehaviour
 {
    private static GameManager _instance;
@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+public void RedirectToPath(int i){
+    CharacterController.Instance.RedirectToPath(i);
+}
 public void hitObstacle(){
     DamageManager.Instance.hitObstacle();
 }
@@ -66,9 +68,7 @@ public void StopWalk(){
 public void StartWalk(){
     CharacterController.Instance.ActivateWallWalking();
 }
-public void SetDestination(GameObject go){
-    CharacterController.Instance.setDestination(go);
-}
+
 public void launchCharacter(){
     CharacterController.Instance.launchCharacter();
 }
