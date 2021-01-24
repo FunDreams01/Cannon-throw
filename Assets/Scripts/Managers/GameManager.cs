@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PathCreation;
+namespace PathCreation.Examples{}
+
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject currentCannon;
+    
    private static GameManager _instance;
    public static GameManager Instance{
 
@@ -29,9 +34,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-public void RedirectToPath(int i){
-    CharacterController.Instance.RedirectToPath(i);
+public void RedirectToPath(PathCreator path){
+    CharacterController.Instance.RedirectToPath(path);
 }
+
 public void hitObstacle(){
     DamageManager.Instance.hitObstacle();
 }
@@ -71,5 +77,20 @@ public void StartWalk(){
 
 public void launchCharacter(){
     CharacterController.Instance.launchCharacter();
+}
+
+public void SetCurrentCanon(GameObject go){
+    currentCannon=go;
+}
+
+public GameObject GetCurrentCanon(){
+    return currentCannon;
+}
+
+public void SetDirection(){
+    CharacterController.Instance.SetDirection();
+}
+public void SetSpeed(float s){
+    CharacterController.Instance.SetSpeed(s);
 }
 }

@@ -5,8 +5,8 @@ using PathCreation;
 namespace PathCreation.Examples{}
 
 public class CharacterController : MonoBehaviour {
-    public PathCreator [] pathList;
-     Animator anim;
+    public static bool inCanon=true;
+    Animator anim;
     GameObject myCollider;
     ColliderFix IdleColFix;
     ColliderFix FlyColFix;
@@ -17,13 +17,14 @@ public class CharacterController : MonoBehaviour {
     public float offsetX;
     public float offsetY;
     public float offsetZ;
-
     public float wallWalkingSpeed;
-
     bool launch = true;
     GameObject myCharacter;
     GameObject body;
-
+    float speed;
+    GameObject myPoint;
+    bool moveTowardsPoint=false;
+     float lerpTime;
     private static CharacterController _instance;
     public static CharacterController Instance {
 
@@ -58,23 +59,38 @@ public class CharacterController : MonoBehaviour {
         WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
         WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
-        GameObject firstCannon = TrajectoryManager.Instance.cannons_rings_endpoints[0];
-        transform.position = firstCannon.transform.position + new Vector3 (offsetX, offsetY, offsetZ);
-        Idle ();
+        Idle();
+       // GameObject firstCannon = TrajectoryManager.Instance.cannons_rings_endpoints[0];
+        //transform.position = firstCannon.transform.position + new Vector3 (offsetX, offsetY, offsetZ);
     }
 
     // Update is called once per frame
     void Update () {
+        if(inCanon){
+            resetCanon();
+        }
         if (isWallWalking) {
             StartWallWalking ();
         }
 
-        /*if(launch){
-        }*/
+
+        if(launch){
+            CinemachineSwitcher.Instance.playAnim("main");
+            transform.Translate(0,0,1*speed*Time.deltaTime);
+        }
     }
-    public void RedirectToPath (int i) {
-        this.GetComponent<PathFollower>().pathCreator=pathList[0];
+
+
+    public void SetSpeed(float s){
+        this.GetComponent<PathFollower>().speed=s;
+        speed=s;
     }
+    public void RedirectToPath (PathCreator path) {
+        this.GetComponent<PathFollower>().pathCreator=path;
+         this.GetComponent<PathFollower>().startFollowing=true;
+
+    }
+
     void StartWallWalking () {
         transform.Translate (Vector3.forward * wallWalkingSpeed * Time.deltaTime);
     }
@@ -120,6 +136,17 @@ public class CharacterController : MonoBehaviour {
 
     public void launchCharacter () {
         launch = true;
+    }
+
+    public void resetCanon(){
+
+        inCanon=false;
+    }
+
+    public void SetDirection(){
+      GameObject dir= GameManager.Instance.GetCurrentCanon().gameObject.transform.Find("Cannon").gameObject.transform.Find("direction").gameObject;
+        transform.position=dir.transform.position;
+        transform.rotation=dir.transform.rotation;
     }
 
 }

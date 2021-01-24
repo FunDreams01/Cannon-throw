@@ -17,6 +17,7 @@ public class ForceSelector : MonoBehaviour {
     GameObject myRaycast;
     RaycastHit hit;
     int layerMask;
+    float speed;
 
     // Start is called before the first frame update
     void Start () {
@@ -32,10 +33,15 @@ public class ForceSelector : MonoBehaviour {
         forceSlected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
            //to be changed to ui behavior of orce selection
-           GameManager.Instance.launchCharacter();
-            Debug.Log(hit.transform.gameObject.tag);
-            // cannon stops moving and shoots character
+           if(hit.collider.tag=="normal"){
+               speed=normalForce;
+           }else if(hit.collider.tag=="good"){
+               speed=goodForce;
+           }else if(hit.collider.tag=="perfect"){
+               speed=perfectForce;
+           }
+            GameManager.Instance.SetSpeed(speed);
+           GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");
         }
     }
-
 }
