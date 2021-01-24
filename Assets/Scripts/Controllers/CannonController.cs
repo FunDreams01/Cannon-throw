@@ -50,6 +50,7 @@ public class CannonController : MonoBehaviour {
                         }
                         break;
                 }
+            GameManager.Instance.SetDirection();
             }
         } else if (state == "launch") {
             GameManager.Instance.launchCharacter ();

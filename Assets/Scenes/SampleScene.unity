@@ -438,7 +438,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 90
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -1272,7 +1272,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400297750}
-  m_LocalRotation: {x: 0.34669366, y: -1.8401076e-14, z: 5.023731e-14, w: 0.93797845}
+  m_LocalRotation: {x: 0.34669363, y: 0.0000000395328, z: -0.000000014611975, w: 0.93797845}
   m_LocalPosition: {x: 0.9281254, y: -0.77265596, z: -18.212715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5392,8 +5392,8 @@ MonoBehaviour:
   editorData:
     _bezierPath:
       points:
-      - {x: 1.7828751, y: 1.6191423, z: 3.1838036}
-      - {x: 1.4765291, y: 2.3558671, z: 8.815793}
+      - {x: 2.0233269, y: 0.9922092, z: 0.9635353}
+      - {x: 2.1029148, y: 1.6867893, z: 3.7696724}
       - {x: 1.5627289, y: 2.466172, z: 8.452995}
       - {x: 1.1869984, y: 2.713288, z: 13.347534}
       - {x: 0.43664032, y: 3.2067947, z: 23.122242}
@@ -5433,8 +5433,8 @@ MonoBehaviour:
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
-    showPathBounds: 1
-    showPerSegmentBounds: 1
+    showPathBounds: 0
+    showPerSegmentBounds: 0
     displayAnchorPoints: 1
     displayControlPoints: 1
     bezierHandleScale: 1
