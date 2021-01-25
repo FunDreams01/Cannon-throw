@@ -1272,7 +1272,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400297750}
-  m_LocalRotation: {x: 0.34669363, y: 0.0000000395328, z: -0.000000014611975, w: 0.93797845}
+  m_LocalRotation: {x: 0.34669363, y: 0.000000039532807, z: -0.000000014611976, w: 0.93797845}
   m_LocalPosition: {x: 0.9281254, y: -0.77265596, z: -18.212715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2032,8 +2032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1ea179b45b45c499538644e369bff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalForce: 5
-  goodForce: 10
+  normalForce: 20
+  goodForce: 20
   perfectForce: 20
   animSpeed: 1.5
   forceSlected: 0
@@ -5429,7 +5429,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 90
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
