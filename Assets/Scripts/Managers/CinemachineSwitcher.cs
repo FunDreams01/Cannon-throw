@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CinemachineSwitcher : MonoBehaviour
 {
+    public GameObject [] vcams;
     Animator anim;
-       private static CinemachineSwitcher _instance;
+    private static CinemachineSwitcher _instance;
    public static CinemachineSwitcher Instance{
 
         get {
@@ -35,5 +37,13 @@ public class CinemachineSwitcher : MonoBehaviour
 }
     public void playAnim(string s){
         anim.Play(s);
+    }
+
+    public void StopFollowing(string name){
+        foreach(GameObject g in vcams){
+            if(g.name==name){
+                g.GetComponent<CinemachineVirtualCamera>().Follow=null;
+            }
+        }
     }
 }

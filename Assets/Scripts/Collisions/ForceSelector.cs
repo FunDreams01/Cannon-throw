@@ -41,7 +41,7 @@ public class ForceSelector : MonoBehaviour {
                speed=perfectForce;
            }
             GameManager.Instance.SetSpeed(speed);
-           GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");
+            GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");
         }
     }
 }

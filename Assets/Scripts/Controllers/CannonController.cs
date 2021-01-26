@@ -12,7 +12,8 @@ public class CannonController : MonoBehaviour {
     public float epsilon = 5;
     public float rotationSpeed = 40;
     public float limitRotDegree = 25;
-    string state = "standBy";
+
+    public string state = "standBy";
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
@@ -50,22 +51,37 @@ public class CannonController : MonoBehaviour {
                         }
                         break;
                 }
-            GameManager.Instance.SetDirection();
+                GameManager.Instance.SetDirection ();
             }
         } else if (state == "launch") {
+            transform.Find ("SwitchCam").gameObject.SetActive (true);
             GameManager.Instance.launchCharacter ();
+            GameManager.Instance.StartFollowPath (0);
             state = "launched";
         }
     }
 
-    public void setState(string s){
-        state=s;
+    public void setState (string s) {
+        state = s;
     }
 
-    private void OnTriggerEnter(Collider other){
-        if(other.gameObject.tag=="Player"){
-            GameManager.Instance.SetCurrentCanon(this.gameObject);
-            GameManager.Instance.SetDirection();
+    private void OnTriggerEnter (Collider other) {
+        if (other.gameObject.tag == "Player") {
+            bool launch = GameManager.Instance.GetPlayerState ();
+            if (!launch) {
+                if (state == "standBy") {
+                    GameManager.Instance.SetCurrentCanon (this.gameObject);
+                    GameManager.Instance.SetDirection ();
+                }
+
+            } else {
+                state = "adjustRotation";
+                GameManager.Instance.StopFlying ();
+                GameManager.Instance.SetCurrentCanon (this.gameObject);
+                Debug.Log(this.gameObject.name);
+                // GameManager.Instance.RotateEnv(envRotation);
+            }
+
         }
     }
 

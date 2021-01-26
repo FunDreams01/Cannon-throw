@@ -37,7 +37,8 @@ public  void hitObstacle(){
         mistakes--;
         UIManager.Instance.UpdateMistakes();
         if(mistakes == 0){
-            GameManager.Instance.Lost();
+            //GameManager.Instance.Lost();
+            
         }
     }
 

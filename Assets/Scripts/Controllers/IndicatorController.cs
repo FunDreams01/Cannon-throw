@@ -17,7 +17,7 @@ public class IndicatorController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (!hitIndicator.GetComponent<ForceSelector> ().forceSlected) {
+       /* if (!hitIndicator.GetComponent<ForceSelector> ().forceSlected) {
             if ((Input.touchCount > 0)) {
                 Touch touch = Input.GetTouch (0);
                 switch (touch.phase) {
@@ -47,7 +47,9 @@ public class IndicatorController : MonoBehaviour {
                         break;
                 }
             }
+        }*/
+        if(Input.GetKey(KeyCode.Return)){
+            hitIndicator.GetComponent<ForceSelector> ().selectForce ();
         }
-
         }
     }

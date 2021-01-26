@@ -8,22 +8,22 @@ public class PathFollower : MonoBehaviour {
     public EndOfPathInstruction endOfPathInstruction;
     public float speed = 5;
     float distanceTravelled;
-    public bool startFollowing = false;
     void Start () {
         if (pathCreator != null) {
             // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
             pathCreator.pathUpdated += OnPathChanged;
+            speed=GameManager.Instance.GetSpeed();
         }
     }
 
     void Update () {
-        if (startFollowing) {
+
             if (pathCreator != null) {
                 distanceTravelled += speed * Time.deltaTime;
                 transform.position = pathCreator.path.GetPointAtDistance (distanceTravelled, endOfPathInstruction);
                 transform.rotation = pathCreator.path.GetRotationAtDistance (distanceTravelled, endOfPathInstruction);
             }
-        }
+
 
     }
 

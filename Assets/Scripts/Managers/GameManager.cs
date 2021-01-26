@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     GameObject currentCannon;
-    
+    GameObject trajectory0;
    private static GameManager _instance;
    public static GameManager Instance{
 
@@ -34,6 +34,31 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void RedirectToPoint(GameObject go){
+        CharacterController.Instance.RedirectToPoint(go);
+    }
+
+    public bool GetPlayerState(){
+        return CharacterController.Instance.GetPlayerState();
+    }
+    public void StopFlying(){
+        CharacterController.Instance.StopFlying();
+    }
+    public float GetSpeed(){
+      return  CharacterController.Instance.GetSpeed();
+    }
+    public void StartFollowPath (int i) {
+        CharacterController.Instance.StartFollowPath(i);
+    }
+
+    public void StopFollowPath (int i) {
+        CharacterController.Instance.StopFollowPath(i);
+    }
+
+public void DestroyTrajectory(GameObject path){
+    CharacterController.Instance.DestroyTrajectory(path);
+}
 public void RedirectToPath(PathCreator path){
     CharacterController.Instance.RedirectToPath(path);
 }
@@ -57,6 +82,9 @@ public void Idle(){
     CharacterController.Instance.Idle();
 }
 
+public void Fall(){
+    CharacterController.Instance.Fall();
+}
 public void Fly(){
     CharacterController.Instance.Fly();
 }
