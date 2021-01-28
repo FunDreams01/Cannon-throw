@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
-    public static int mistakes = 3;
 
     private static DamageManager _instance;
    public static DamageManager Instance{
@@ -33,14 +32,8 @@ public class DamageManager : MonoBehaviour
     }
 
 public  void hitObstacle(){
-    if(mistakes>0){
-        mistakes--;
-        UIManager.Instance.UpdateMistakes();
-        if(mistakes == 0){
-            //GameManager.Instance.Lost();
-            
-        }
-    }
+        
+        GameManager.Instance.Lost();
 
 }
 

@@ -7,8 +7,8 @@ public class building : MonoBehaviour
 {
     if(other.gameObject.tag=="Player"){
        GameManager.Instance.Fall();
-        CinemachineSwitcher.Instance.playAnim ("down");
-        CinemachineSwitcher.Instance.StopFollowing("down");
+        UIManager.Instance.closeGamePanel();
+       UIManager.Instance.Lost();
     }
 }
 }

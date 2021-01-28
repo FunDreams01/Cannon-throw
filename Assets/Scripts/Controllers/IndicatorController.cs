@@ -10,6 +10,7 @@ public class IndicatorController : MonoBehaviour {
     float tapTime;
     bool touchDidMove = false;
     public float tapTimeThreshold = 0.5f;
+    public bool ok=false;
     // Start is called before the first frame update
     void Start () {
         hitIndicator = transform.Find ("HitIndicator").gameObject;
@@ -17,6 +18,7 @@ public class IndicatorController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if(ok){
        /* if (!hitIndicator.GetComponent<ForceSelector> ().forceSlected) {
             if ((Input.touchCount > 0)) {
                 Touch touch = Input.GetTouch (0);
@@ -50,6 +52,7 @@ public class IndicatorController : MonoBehaviour {
         }*/
         if(Input.GetKey(KeyCode.Return)){
             hitIndicator.GetComponent<ForceSelector> ().selectForce ();
+        }
         }
         }
     }

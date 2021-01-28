@@ -9,9 +9,9 @@ namespace PathCreation.Examples {
             if (other.gameObject.tag == "Player") {
 
                 if (this.gameObject.tag == "wallLeft") {
-                    //  GameManager.Instance.WalkLeft();
+                     GameManager.Instance.WalkLeft();
                 } else if (this.gameObject.tag == "wallRight") {
-                    // GameManager.Instance.WalkRight();
+                     GameManager.Instance.WalkRight();
                 }
                 GameManager.Instance.StartWalk ();
             }
@@ -20,7 +20,7 @@ namespace PathCreation.Examples {
         private void OnCollisionExit (Collision other) {
             if (other.gameObject.tag == "Player") {
                 GameManager.Instance.StopWalk ();
-                //GameManager.Instance.Fly ();
+                GameManager.Instance.Fly ();
                 GetComponent<Collider> ().enabled = false;
                 GameManager.Instance.RedirectToPoint (go);
             }

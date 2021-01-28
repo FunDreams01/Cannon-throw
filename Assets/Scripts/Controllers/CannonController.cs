@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CannonController : MonoBehaviour {
+    public GameObject vfx;
     public Text dist;
     public Text pos;
     GameObject cannon;
@@ -12,59 +13,83 @@ public class CannonController : MonoBehaviour {
     public float epsilon = 5;
     public float rotationSpeed = 40;
     public float limitRotDegree = 25;
-
+    public GameObject kaboom;
     public string state = "standBy";
+    public bool shoot = false;
+    public bool ok = false;
+    string rotate="false";
+    Animator anim;
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
+        kaboom = cannon.transform.Find ("kaboom").gameObject;
+        anim = kaboom.GetComponent<Animator> ();
+        vfx = transform.Find ("Light").gameObject;
     }
 
     // Update is called once per frame
     void Update () {
-        if (state == "standBy") {
-            if ((Input.touchCount > 0)) {
-                Touch touch = Input.GetTouch (0);
-                switch (touch.phase) {
-                    case TouchPhase.Began:
-                        beginTouchPos = touch.position;
-                        touchDidMove = false;
-                        break;
+        if (ok) {
+            if (state == "standBy") {
+                if ((Input.touchCount > 0)) {
+                    Touch touch = Input.GetTouch (0);
+                    switch (touch.phase) {
+                        case TouchPhase.Began:
+                            beginTouchPos = touch.position;
+                            touchDidMove = false;
+                            break;
 
-                    case TouchPhase.Moved:
-                        touchDidMove = true;
-                        //swipe right
-                        if ((touch.position.x > beginTouchPos.x)) {
-                            if (cannon.transform.eulerAngles.y < limitRotDegree || cannon.transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
-                                cannon.transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
-                                pos.text = cannon.transform.eulerAngles.y.ToString ();
-                                beginTouchPos = touch.position;
-                            }
+                        case TouchPhase.Moved:
+                            touchDidMove = true;
+                            //swipe right
+                            if ((touch.position.x > beginTouchPos.x)) {
+                                if (cannon.transform.eulerAngles.y < limitRotDegree || cannon.transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
+                                    cannon.transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                    beginTouchPos = touch.position;
+                                }
 
-                        }
-                        //swipe left
-                        if ((touch.position.x < beginTouchPos.x)) {
-                            if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) || cannon.transform.eulerAngles.y <= limitRotDegree + 1) {
-                                cannon.transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
-                                pos.text = cannon.transform.eulerAngles.y.ToString ();
-                                beginTouchPos = touch.position;
                             }
-                        }
-                        break;
+                            //swipe left
+                            if ((touch.position.x < beginTouchPos.x)) {
+                                if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) || cannon.transform.eulerAngles.y <= limitRotDegree + 1) {
+                                    cannon.transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                    beginTouchPos = touch.position;
+                                }
+                            }
+                            break;
+                    }
+                    GameManager.Instance.SetDirection ();
                 }
-                GameManager.Instance.SetDirection ();
+            } else if (state == "launch") {
+                //kaboom!
+                if (shoot) {
+                    anim.SetBool ("ok", true);
+                    if (GameManager.Instance.GetSelectedForce () == "perfect") {
+                        vfx.SetActive(true);
+                        vfx.GetComponent<ParticleSystem> ().Play ();
+                    }
+                    if (anim.GetCurrentAnimatorStateInfo (0).IsName ("anim2")) {
+                        shoot = false;
+                    }
+                } else {
+                    GameManager.Instance.launchCharacter ();
+                    GameManager.Instance.StartFollowPath (0);
+                    state = "launched";
+                }
             }
-        } else if (state == "launch") {
-            transform.Find ("SwitchCam").gameObject.SetActive (true);
-            GameManager.Instance.launchCharacter ();
-            GameManager.Instance.StartFollowPath (0);
-            state = "launched";
         }
+
     }
 
     public void setState (string s) {
         state = s;
     }
 
+    public void ShootCannon () {
+        shoot = true;
+    }
     private void OnTriggerEnter (Collider other) {
         if (other.gameObject.tag == "Player") {
             bool launch = GameManager.Instance.GetPlayerState ();
@@ -72,13 +97,13 @@ public class CannonController : MonoBehaviour {
                 if (state == "standBy") {
                     GameManager.Instance.SetCurrentCanon (this.gameObject);
                     GameManager.Instance.SetDirection ();
+                    GameManager.Instance.changeCam ("closeToFar");
                 }
 
             } else {
                 state = "adjustRotation";
                 GameManager.Instance.StopFlying ();
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
-                Debug.Log(this.gameObject.name);
                 // GameManager.Instance.RotateEnv(envRotation);
             }
 

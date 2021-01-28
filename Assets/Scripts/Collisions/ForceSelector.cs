@@ -4,11 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ForceSelector : MonoBehaviour {
-    [Header("Launch Forces")]
-    public float normalForce = 5;
-    public float goodForce = 10;
-    public float perfectForce = 20;
-
+  
     [Header("Arrow Speed")]
     public float animSpeed = 1;
     public bool forceSlected = false;
@@ -29,18 +25,14 @@ public class ForceSelector : MonoBehaviour {
     }
 
    public void selectForce () {
-        arrowAnim.enabled = false;
+       arrowAnim.enabled = false;
         forceSlected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
            //to be changed to ui behavior of orce selection
-           if(hit.collider.tag=="normal"){
-               speed=normalForce;
-           }else if(hit.collider.tag=="good"){
-               speed=goodForce;
-           }else if(hit.collider.tag=="perfect"){
-               speed=perfectForce;
-           }
+            speed=GameManager.Instance.GetForce(hit.collider.tag);
             GameManager.Instance.SetSpeed(speed);
+            GameManager.Instance.SetForce(hit.collider.tag);
+            GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().ShootCannon();
             GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");
         }
     }

@@ -17,6 +17,7 @@ TagManager:
   - ring
   - endPath
   - building
+  - cannon
   layers:
   - Default
   - TransparentFX

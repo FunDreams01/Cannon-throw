@@ -6,6 +6,13 @@ namespace PathCreation.Examples{}
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Launch Forces")]
+    public float normalForce;
+    public float goodForce ;
+    public float perfectForce;
+
+    public string selectedForce;
+
     [SerializeField]
     GameObject currentCannon;
     GameObject trajectory0;
@@ -35,6 +42,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+      
+    public void init(){
+        currentCannon.GetComponent<CannonController>().ok=true;
+        currentCannon.GetComponent<IndicatorController>().ok=true;
+        currentCannon.transform.Find("HitIndicator").gameObject.transform.Find("Arrow").gameObject.GetComponent<Animator>().SetBool("ok",true);
+    }
+    public void SetForce(string s){
+        selectedForce=s;
+    }
+    public string GetSelectedForce(){
+        return selectedForce;
+    }
+    public float GetForce(string s){
+        if(s=="normal"){
+            return normalForce;
+        }else if(s=="good"){
+            return goodForce;
+        }else if(s=="perfect"){
+            return perfectForce;
+        }else{
+            return 0;
+        }
+    }
+    public string GetCamState(){
+        return CameraManager.Instance.GetCamState();
+    }
+    public void changeCam(string s){
+        CameraManager.Instance.changeCam(s);
+    }
     public void RedirectToPoint(GameObject go){
         CharacterController.Instance.RedirectToPoint(go);
     }

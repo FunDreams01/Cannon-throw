@@ -5,19 +5,27 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject c1;
+    public GameObject c2;
     [SerializeField]
     Text scoreText;
-    [SerializeField] 
-    Image mistake1;
-    [SerializeField]
-    Image mistake2;
-    [SerializeField]
-    Image mistake3;
+   [SerializeField]
+    Text coinText;
+
 
     [SerializeField]
-    Image LostPanel;
+    GameObject LostPanel;
     [SerializeField]
-    Image WinPanel;
+    GameObject WinPanel;
+     [SerializeField]
+    GameObject StartPanel;
+    [SerializeField]
+    GameObject GamePanel;
+    public Image progress;
+    public float maxdist;
+   public  float d;
+    public string state;
     private static UIManager _instance;
     public static UIManager Instance{
 
@@ -43,18 +51,37 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void UpdateMistakes(){
-        if(DamageManager.mistakes == 2){
-            mistake1.gameObject.SetActive(true);
-        }else if(DamageManager.mistakes == 1){
-            mistake2.gameObject.SetActive(true);
-        }else if(DamageManager.mistakes == 0){
-            mistake3.gameObject.SetActive(true);
-        }
-    }
+private void Start()
+{
+    state="half1";
+    progress.fillAmount=0;
+    maxdist= Vector3.Distance(player.transform.position, c1.transform.position);
+}
 
+private void Update()
+{
+    if(state=="half1"){
+        if(Vector3.Distance(player.transform.position, c1.transform.position)>0){
+             d=1 -(Vector3.Distance(player.transform.position, c1.transform.position)/maxdist);
+            progress.fillAmount=d/2;
+        }else{
+            state="half2";
+            maxdist= Vector3.Distance(player.transform.position, c2.transform.position);
+        }
+       
+    }/*else if(state=="half2"){
+        if(Vector3.Distance(player.transform.position, c2.transform.position)>0){
+             d=1 -(Vector3.Distance(player.transform.position, c2.transform.position)/maxdist);
+            progress.fillAmount=progress.fillAmount+d/2;
+        }else{
+            state="end";
+        }
+       
+    }*/
+}
     public void UpdateScore(){
-//        scoreText.text=ScoreManager.score.ToString();
+       scoreText.text=ScoreManager.score.ToString();
+    coinText.text=ScoreManager.score.ToString();
     }
 
     public void Lost(){
@@ -62,5 +89,20 @@ public class UIManager : MonoBehaviour
     }
      public void Won(){
         WinPanel.gameObject.SetActive(true);
+    }
+     public void Game(){
+        GamePanel.gameObject.SetActive(true);
+    }
+
+    public void closeStartPanel(){
+        StartPanel.SetActive(false);
+    }
+
+     public void closeGamePanel(){
+       GamePanel.SetActive(false);
+    }
+
+    public void init(){
+        GameManager.Instance.init();
     }
 }

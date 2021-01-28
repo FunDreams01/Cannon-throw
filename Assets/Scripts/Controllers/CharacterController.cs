@@ -23,7 +23,7 @@ public class CharacterController : MonoBehaviour {
     bool fall = false;
     GameObject myCharacter;
     GameObject body;
-    float speed = 5;
+   public float speed;
     GameObject myPoint;
     bool moveTowardsPoint = false;
     public float slerpSpeed;
@@ -57,13 +57,13 @@ public class CharacterController : MonoBehaviour {
         myCharacter = body.transform.Find ("myCharacter").gameObject;
         myCollider = body.transform.Find ("collider").gameObject;
         path_followers = this.GetComponents<PathFollower> ();
-        /* anim = myCharacter.GetComponent<Animator> ();
+         anim = myCharacter.GetComponent<Animator> ();
          IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.063f), new Vector3 (90, 0, 0));
          FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.17f), new Vector3 (90, 0, 0));
          WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
          WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
          SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
-         Idle();*/
+         Idle();
         // GameObject firstCannon = TrajectoryManager.Instance.cannons_rings_endpoints[0];
         //transform.position = firstCannon.transform.position + new Vector3 (offsetX, offsetY, offsetZ);
     }
@@ -97,7 +97,7 @@ public class CharacterController : MonoBehaviour {
             } else {
                 transform.Translate (0, -1 * speed * Time.deltaTime, 0);
                 if (transform.position.y <= fallHeight) {
-                    ScenesManager.Instance.LoadScene ("CannonThrow");
+                    //ScenesManager.Instance.LoadScene ("CannonThrow");
                 }
             }
         }
@@ -149,7 +149,7 @@ public class CharacterController : MonoBehaviour {
     public void Idle () {
         anim.SetInteger ("animParam", 0);
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
-        myCollider.transform.Rotate (IdleColFix.rotation);
+        myCollider.transform.eulerAngles= IdleColFix.rotation;
     }
 
     public void Fall () {
@@ -158,34 +158,33 @@ public class CharacterController : MonoBehaviour {
         launch = false;
     }
     public void Fly () {
-        Debug.Log ("fly");
         anim.SetInteger ("animParam", 1);
         myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
-        myCollider.transform.Rotate (FlyColFix.rotation);
+        myCollider.transform.eulerAngles =FlyColFix.rotation;
     }
 
     public void WalkLeft () {
-        Debug.Log ("walk left");
         anim.SetInteger ("animParam", 2);
         myCollider.transform.position = transform.TransformPoint (WLColFix.position);
-        myCollider.transform.Rotate (WLColFix.rotation);
+        myCollider.transform.eulerAngles =WLColFix.rotation;
     }
 
     public void WalkRight () {
         anim.SetInteger ("animParam", 3);
         myCollider.transform.position = transform.TransformPoint (WRColFix.position);
-        myCollider.transform.Rotate (WRColFix.rotation);
+        myCollider.transform.eulerAngles=WRColFix.rotation;
     }
 
     public void Swim () {
         anim.SetInteger ("animParam", 4);
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
-        myCollider.transform.Rotate (SwimColFix.rotation);
+        myCollider.transform.eulerAngles= SwimColFix.rotation;
     }
 
     public void launchCharacter () {
         launch = true;
         FollowPath (0);
+        Fly();
     }
 
     public void FollowPath (int i) {

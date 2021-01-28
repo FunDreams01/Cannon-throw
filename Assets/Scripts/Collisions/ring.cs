@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchCam : MonoBehaviour
+public class ring : MonoBehaviour
 {
-    public string swcitchToCam;
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Player"){
-            CinemachineSwitcher.Instance.playAnim(swcitchToCam);
+          transform.Find("RiseRing").GetComponent<ParticleSystem>().Play();
         }
     }
 }
