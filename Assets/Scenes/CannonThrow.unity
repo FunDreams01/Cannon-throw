@@ -185,7 +185,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &19001962
 GameObject:
@@ -3280,6 +3280,9 @@ MonoBehaviour:
   state: standBy
   shoot: 0
   ok: 0
+  rotateTowards: {fileID: 0}
+  rotationSmooth: 0
+  rotateNow: 0
 --- !u!65 &576065099
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3524,7 +3527,7 @@ Transform:
   - {fileID: 2136070344}
   - {fileID: 883298207}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &595266566
 Animator:
@@ -5311,6 +5314,36 @@ Transform:
   m_Father: {fileID: 1748030778}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -17.755001, z: 0}
+--- !u!1 &858869987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858869988}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &858869988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858869987}
+  m_LocalRotation: {x: 1.1368684e-13, y: -1, z: -0, w: 0.000021725893}
+  m_LocalPosition: {x: 0.07417577, y: 18.349995, z: 637}
+  m_LocalScale: {x: 0.27730298, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &860241654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11036,7 +11069,7 @@ Transform:
   - {fileID: 460156230}
   - {fileID: 1211892353}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1750506522
 PrefabInstance:
@@ -12560,6 +12593,9 @@ MonoBehaviour:
   state: standBy
   shoot: 0
   ok: 0
+  rotateTowards: {fileID: 858869987}
+  rotationSmooth: 2
+  rotateNow: 0
 --- !u!114 &2115358209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12605,7 +12641,7 @@ Transform:
   - {fileID: 682318975}
   - {fileID: 1265811587}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -179.998, z: 0}
 --- !u!1001 &2126442569
 PrefabInstance:
@@ -14338,7 +14374,7 @@ Transform:
   - {fileID: 1323305196877566954}
   - {fileID: 1241802193}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323305197023786025
 GameObject:

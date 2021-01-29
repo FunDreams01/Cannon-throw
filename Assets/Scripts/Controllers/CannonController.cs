@@ -17,8 +17,11 @@ public class CannonController : MonoBehaviour {
     public string state = "standBy";
     public bool shoot = false;
     public bool ok = false;
-    string rotate="false";
+    string rotate = "false";
     Animator anim;
+    public GameObject rotateTowards;
+    public float rotationSmooth;
+    public bool rotateNow = false;
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
@@ -67,7 +70,7 @@ public class CannonController : MonoBehaviour {
                 if (shoot) {
                     anim.SetBool ("ok", true);
                     if (GameManager.Instance.GetSelectedForce () == "perfect") {
-                        vfx.SetActive(true);
+                        vfx.SetActive (true);
                         vfx.GetComponent<ParticleSystem> ().Play ();
                     }
                     if (anim.GetCurrentAnimatorStateInfo (0).IsName ("anim2")) {
@@ -78,6 +81,17 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.StartFollowPath (0);
                     state = "launched";
                 }
+            }
+        } else {
+            if (rotateNow) {
+              // Smoothly rotates towards target 
+            var targetPoint = rotateTowards.transform.position;
+            var targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmooth); 
+            if(Quaternion.Angle(targetRotation, transform.rotation)<0.01f){
+                rotateNow=false;
+                GameManager.Instance.RotateEnv();
+            }   
             }
         }
 
@@ -99,12 +113,13 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.SetDirection ();
                     GameManager.Instance.changeCam ("closeToFar");
                 }
-
             } else {
-                state = "adjustRotation";
                 GameManager.Instance.StopFlying ();
+                state = "adjustRotation";
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
-                // GameManager.Instance.RotateEnv(envRotation);
+                if (this.tag == "cannon") {
+                    rotateNow = true;
+                }
             }
 
         }
