@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CannonController : MonoBehaviour {
+    public int index;
     public GameObject vfx;
     public Text dist;
     public Text pos;
@@ -78,7 +79,7 @@ public class CannonController : MonoBehaviour {
                     }
                 } else {
                     GameManager.Instance.launchCharacter ();
-                    GameManager.Instance.StartFollowPath (0);
+                    GameManager.Instance.StartFollowPath (index);
                     state = "launched";
                 }
             }

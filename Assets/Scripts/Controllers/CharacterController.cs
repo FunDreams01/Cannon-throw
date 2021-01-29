@@ -5,6 +5,10 @@ using UnityEngine;
 namespace PathCreation.Examples { }
 
 public class CharacterController : MonoBehaviour {
+    public bool canMove = true;
+    public float translateSpeed;
+    public float translateLimit;
+    Vector3 initPos;
     GameObject point;
     public PathFollower[] path_followers;
     public static bool inCanon = true;
@@ -23,7 +27,7 @@ public class CharacterController : MonoBehaviour {
     bool fall = false;
     GameObject myCharacter;
     GameObject body;
-   public float speed;
+    public float speed;
     GameObject myPoint;
     bool moveTowardsPoint = false;
     public float slerpSpeed;
@@ -57,15 +61,14 @@ public class CharacterController : MonoBehaviour {
         myCharacter = body.transform.Find ("myCharacter").gameObject;
         myCollider = body.transform.Find ("collider").gameObject;
         path_followers = this.GetComponents<PathFollower> ();
-         anim = myCharacter.GetComponent<Animator> ();
-         IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.063f), new Vector3 (90, 0, 0));
-         FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.17f), new Vector3 (90, 0, 0));
-         WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
-         WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
-         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
-         Idle();
-        // GameObject firstCannon = TrajectoryManager.Instance.cannons_rings_endpoints[0];
-        //transform.position = firstCannon.transform.position + new Vector3 (offsetX, offsetY, offsetZ);
+        anim = myCharacter.GetComponent<Animator> ();
+        IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.063f), new Vector3 (90, 0, 0));
+        FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.17f), new Vector3 (90, 0, 0));
+        WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
+        WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
+        SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
+        Idle ();
+        initPos = transform.position;
     }
 
     // Update is called once per frame
@@ -79,17 +82,31 @@ public class CharacterController : MonoBehaviour {
 
         if (launch) {
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
-            if (rotate) {
-                Vector3 targetDirection = point.transform.position - transform.position;
+            if (rotate) { }
+            if (canMove) {
+                if (Input.GetKey (KeyCode.RightArrow)) {
+                    if (transform.position.x >= 0) {
+                        if (transform.position.x < translateLimit) {
+                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                        }
+                    } else {
+                        if (transform.position.x > -translateLimit) {
+                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                        }
+                    }
+                }
+                if (Input.GetKey (KeyCode.LeftArrow)) {
+                    if (transform.position.x >= 0) {
+                        if (transform.position.x < translateLimit) {
+                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                        }
+                    } else {
+                        if (transform.position.x > -translateLimit) {
+                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                        }
+                    }
+                }
 
-                // The step size is equal to speed times frame time.
-                float singleStep = slerpSpeed * Time.deltaTime;
-
-                // Rotate the forward vector towards the target direction by one step
-                Vector3 newDirection = Vector3.RotateTowards (transform.forward, targetDirection, singleStep, 0.0f);
-
-                // Calculate a rotation a step closer to the target and applies rotation to this object
-                transform.rotation = Quaternion.LookRotation (newDirection);
             }
         } else {
             if (!fall) {
@@ -149,7 +166,7 @@ public class CharacterController : MonoBehaviour {
     public void Idle () {
         anim.SetInteger ("animParam", 0);
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
-        myCollider.transform.eulerAngles= IdleColFix.rotation;
+        myCollider.transform.eulerAngles = IdleColFix.rotation;
     }
 
     public void Fall () {
@@ -160,31 +177,31 @@ public class CharacterController : MonoBehaviour {
     public void Fly () {
         anim.SetInteger ("animParam", 1);
         myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
-        myCollider.transform.eulerAngles =FlyColFix.rotation;
+        myCollider.transform.eulerAngles = FlyColFix.rotation;
     }
 
     public void WalkLeft () {
         anim.SetInteger ("animParam", 2);
         myCollider.transform.position = transform.TransformPoint (WLColFix.position);
-        myCollider.transform.eulerAngles =WLColFix.rotation;
+        myCollider.transform.eulerAngles = WLColFix.rotation;
     }
 
     public void WalkRight () {
         anim.SetInteger ("animParam", 3);
         myCollider.transform.position = transform.TransformPoint (WRColFix.position);
-        myCollider.transform.eulerAngles=WRColFix.rotation;
+        myCollider.transform.eulerAngles = WRColFix.rotation;
     }
 
     public void Swim () {
         anim.SetInteger ("animParam", 4);
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
-        myCollider.transform.eulerAngles= SwimColFix.rotation;
+        myCollider.transform.eulerAngles = SwimColFix.rotation;
     }
 
     public void launchCharacter () {
         launch = true;
         FollowPath (0);
-        Fly();
+        Fly ();
     }
 
     public void FollowPath (int i) {
