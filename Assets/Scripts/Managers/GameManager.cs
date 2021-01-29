@@ -45,7 +45,11 @@ public class GameManager : MonoBehaviour
     public void RotateEnv(){
         EnvironmentController.Instance.RotateEnv();
     }
-      
+    public void uninit(){
+        currentCannon.GetComponent<CannonController>().ok=false;
+        currentCannon.GetComponent<IndicatorController>().ok=false;
+        currentCannon.transform.Find("HitIndicator").gameObject.transform.Find("Arrow").gameObject.GetComponent<Animator>().SetBool("ok",false);
+    }  
     public void init(){
         currentCannon.GetComponent<CannonController>().ok=true;
         currentCannon.GetComponent<IndicatorController>().ok=true;

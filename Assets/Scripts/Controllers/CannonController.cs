@@ -115,10 +115,12 @@ public class CannonController : MonoBehaviour {
             } else {
                 GameManager.Instance.StopFlying ();
                 state = "adjustRotation";
+                GameManager.Instance.uninit();
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
                 if (this.tag == "cannon") {
                     rotateNow = true;
                     GameManager.Instance.RotateEnv();
+                    GameManager.Instance.changeCam("closeToFar");
                 }
             }
 
