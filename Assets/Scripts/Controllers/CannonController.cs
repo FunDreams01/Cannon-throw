@@ -90,7 +90,6 @@ public class CannonController : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmooth); 
             if(Quaternion.Angle(targetRotation, transform.rotation)<0.01f){
                 rotateNow=false;
-                GameManager.Instance.RotateEnv();
             }   
             }
         }
@@ -119,6 +118,7 @@ public class CannonController : MonoBehaviour {
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
                 if (this.tag == "cannon") {
                     rotateNow = true;
+                    GameManager.Instance.RotateEnv();
                 }
             }
 

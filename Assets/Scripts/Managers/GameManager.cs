@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RotateEnv(){
+        EnvironmentController.Instance.RotateEnv();
+    }
       
     public void init(){
         currentCannon.GetComponent<CannonController>().ok=true;
