@@ -28,7 +28,7 @@ public class CharacterController : MonoBehaviour {
     bool isWallWalking = false;
     public float wallWalkingSpeed;
     public bool launch = false;
-    bool beginTouchPos;
+    Vector2 beginTouchPos;
     bool touchDidMove;
     bool fall = false;
     bool isswimming = false;
@@ -113,24 +113,28 @@ public class CharacterController : MonoBehaviour {
                             touchDidMove = true;
                             //swipe right
                             if ((touch.position.x > beginTouchPos.x)) {
-                                if (cannon.transform.eulerAngles.y < limitRotDegree || cannon.transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
-                                    cannon.transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
-                                    beginTouchPos = touch.position;
+                                if (transform.position.x >= 0) {
+                                    if (transform.position.x < translateLimit) {
+                                        transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                    }
+                                } else {
+                                    transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                                 }
-
+                                beginTouchPos = touch.position;
                             }
                             //swipe left
                             if ((touch.position.x < beginTouchPos.x)) {
-                                if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) || cannon.transform.eulerAngles.y <= limitRotDegree + 1) {
-                                    cannon.transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
-                                    beginTouchPos = touch.position;
+                                if (transform.position.x >= 0) {
+                                    transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                } else {
+                                    if (transform.position.x > -translateLimit) {
+                                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                    }
                                 }
+                                beginTouchPos = touch.position;
                             }
                             break;
                     }
-                    GameManager.Instance.SetDirection ();
                 }
 
                 if (Input.GetKey (KeyCode.RightArrow)) {
@@ -144,7 +148,6 @@ public class CharacterController : MonoBehaviour {
                 }
                 if (Input.GetKey (KeyCode.LeftArrow)) {
                     if (transform.position.x >= 0) {
-
                         transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                     } else {
                         if (transform.position.x > -translateLimit) {
@@ -161,9 +164,8 @@ public class CharacterController : MonoBehaviour {
                 if (!fall) {
                     SetDirection ();
                 } else {
+                     if (transform.position.y > fallHeight) {
                     transform.Translate (0, -1 * speed * Time.deltaTime, 0);
-                    if (transform.position.y <= fallHeight) {
-                        //ScenesManager.Instance.LoadScene ("CannonThrow");
                     }
                 }
             }
