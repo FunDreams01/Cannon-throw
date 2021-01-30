@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public float timeSlide;
     public GameObject player;
     public GameObject c1;
     public GameObject c2;
@@ -22,6 +23,10 @@ public class UIManager : MonoBehaviour
     GameObject StartPanel;
     [SerializeField]
     GameObject GamePanel;
+    [SerializeField]
+    GameObject tapPanel;
+    [SerializeField]
+    GameObject slidePanel;
     public Image progress;
     public float maxdist;
    public  float d;
@@ -107,5 +112,22 @@ private void Update()
     public void EndState(){
         state="end";
         progress.fillAmount=1;
+    }
+    public void tapOn(){
+        tapPanel.SetActive(true);
+    }
+       public void tapOff(){
+        tapPanel.SetActive(false);
+    }    public void slideOn(){
+        slidePanel.SetActive(true);
+        StartCoroutine(wait());
+
+    }    public void slideOff(){
+        slidePanel.SetActive(false);
+    } 
+
+        IEnumerator wait(){
+        yield return new WaitForSeconds(timeSlide);
+        slidePanel.SetActive(false);
     }
 }

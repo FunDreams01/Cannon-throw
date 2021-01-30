@@ -34,6 +34,8 @@ public class ForceSelector : MonoBehaviour {
             GameManager.Instance.SetForce(hit.collider.tag);
             GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().ShootCannon();
             GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");
+            UIManager.Instance.tapOff();
+            UIManager.Instance.slideOn();           
         }
     }
 }
