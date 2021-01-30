@@ -13,6 +13,7 @@ public class endPath : MonoBehaviour
         if(other.gameObject.tag=="Player"){
             GameManager.Instance.DestroyTrajectory(path.gameObject);
             GameManager.Instance.StopFollowPath(follower);
+            GameManager.Instance.StartMove();
         }
     }
 }

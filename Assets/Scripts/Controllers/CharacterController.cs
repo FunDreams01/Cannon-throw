@@ -5,7 +5,9 @@ using UnityEngine;
 namespace PathCreation.Examples { }
 
 public class CharacterController : MonoBehaviour {
-    public bool canMove = true;
+    public GameObject endpoint;
+    public GameObject endPath;
+    public bool canMove = false;
     public float translateSpeed;
     public float translateLimit;
     Vector3 initPos;
@@ -13,6 +15,8 @@ public class CharacterController : MonoBehaviour {
     public PathFollower[] path_followers;
     public static bool inCanon = true;
     public float fallHeight;
+    bool backToTrack = false;
+    GameObject trackpoint;
     public float fallSpeed;
     Animator anim;
     GameObject myCollider;
@@ -24,7 +28,10 @@ public class CharacterController : MonoBehaviour {
     bool isWallWalking = false;
     public float wallWalkingSpeed;
     public bool launch = false;
+    bool beginTouchPos;
+    bool touchDidMove;
     bool fall = false;
+    bool isswimming = false;
     GameObject myCharacter;
     GameObject body;
     public float speed;
@@ -32,6 +39,7 @@ public class CharacterController : MonoBehaviour {
     bool moveTowardsPoint = false;
     public float slerpSpeed;
     bool rotate = false;
+    bool startAlign = false;
     private static CharacterController _instance;
     public static CharacterController Instance {
 
@@ -82,42 +90,86 @@ public class CharacterController : MonoBehaviour {
 
         if (launch) {
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
-            if (rotate) { }
+            if (backToTrack) {
+                if (trackpoint != null) {
+                    if (transform.position.x > trackpoint.transform.position.x) {
+                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                    } else if (transform.position.x <= trackpoint.transform.position.x) {
+                        transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                    }
+                }
+            }
             if (canMove) {
+
+                if ((Input.touchCount > 0)) {
+                    Touch touch = Input.GetTouch (0);
+                    switch (touch.phase) {
+                        case TouchPhase.Began:
+                            beginTouchPos = touch.position;
+                            touchDidMove = false;
+                            break;
+
+                        case TouchPhase.Moved:
+                            touchDidMove = true;
+                            //swipe right
+                            if ((touch.position.x > beginTouchPos.x)) {
+                                if (cannon.transform.eulerAngles.y < limitRotDegree || cannon.transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
+                                    cannon.transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                    beginTouchPos = touch.position;
+                                }
+
+                            }
+                            //swipe left
+                            if ((touch.position.x < beginTouchPos.x)) {
+                                if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) || cannon.transform.eulerAngles.y <= limitRotDegree + 1) {
+                                    cannon.transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                    beginTouchPos = touch.position;
+                                }
+                            }
+                            break;
+                    }
+                    GameManager.Instance.SetDirection ();
+                }
+
                 if (Input.GetKey (KeyCode.RightArrow)) {
                     if (transform.position.x >= 0) {
                         if (transform.position.x < translateLimit) {
                             transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                         }
                     } else {
-                        if (transform.position.x > -translateLimit) {
-                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
-                        }
+                        transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                     }
                 }
                 if (Input.GetKey (KeyCode.LeftArrow)) {
                     if (transform.position.x >= 0) {
-                        if (transform.position.x < translateLimit) {
-                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
-                        }
+
+                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                     } else {
                         if (transform.position.x > -translateLimit) {
                             transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                         }
                     }
                 }
-
             }
+
         } else {
-            if (!fall) {
-                SetDirection ();
+            if (isswimming) {
+
             } else {
-                transform.Translate (0, -1 * speed * Time.deltaTime, 0);
-                if (transform.position.y <= fallHeight) {
-                    //ScenesManager.Instance.LoadScene ("CannonThrow");
+                if (!fall) {
+                    SetDirection ();
+                } else {
+                    transform.Translate (0, -1 * speed * Time.deltaTime, 0);
+                    if (transform.position.y <= fallHeight) {
+                        //ScenesManager.Instance.LoadScene ("CannonThrow");
+                    }
                 }
             }
+
         }
+
     }
 
     public void RedirectToPoint (GameObject go) {
@@ -196,6 +248,7 @@ public class CharacterController : MonoBehaviour {
         anim.SetInteger ("animParam", 4);
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
         myCollider.transform.eulerAngles = SwimColFix.rotation;
+        isswimming = true;
     }
 
     public void launchCharacter () {
@@ -218,4 +271,21 @@ public class CharacterController : MonoBehaviour {
         transform.rotation = dir.transform.rotation;
     }
 
+    public void StartMove () {
+        canMove = true;
+    }
+    public void StopMove () {
+        canMove = false;
+    }
+
+    public void AlignEnd () {
+        endPath.transform.position = transform.position;
+        transform.LookAt (endpoint.transform);
+        endPath.transform.LookAt (endpoint.transform);
+    }
+
+    public void SetBackTOtrack (bool b, GameObject g) {
+        backToTrack = b;
+        trackpoint = g;
+    }
 }

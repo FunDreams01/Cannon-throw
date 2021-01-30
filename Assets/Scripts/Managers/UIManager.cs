@@ -70,11 +70,9 @@ private void Update()
         }
        
     }else if(state=="half2"){
-        if(Vector3.Distance(player.transform.position, c2.transform.position)>0){
+        if(Vector3.Distance(player.transform.position, c2.transform.position)>0.01f){
              d=1 -(Vector3.Distance(player.transform.position, c2.transform.position)/maxdist);
             progress.fillAmount=0.5f+d/2;
-        }else{
-            state="end";
         }
        
     }
@@ -104,5 +102,10 @@ private void Update()
 
     public void init(){
         GameManager.Instance.init();
+    }
+
+    public void EndState(){
+        state="end";
+        progress.fillAmount=1;
     }
 }

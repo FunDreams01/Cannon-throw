@@ -164,4 +164,14 @@ public void SetDirection(){
 public void SetSpeed(float s){
     CharacterController.Instance.SetSpeed(s);
 }
+    public void StartMove(){
+        CharacterController.Instance.StartMove();
+    }
+    public void StopMove(){
+        CharacterController.Instance.StopMove();
+    }
+    public void AlignEnd(){
+        CharacterController.Instance.AlignEnd();
+    }
+
 }

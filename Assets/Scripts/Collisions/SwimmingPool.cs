@@ -7,7 +7,7 @@ public class SwimmingPool : MonoBehaviour
    private void OnTriggerEnter(Collider other)
    {
        if(other.gameObject.tag == "Player"){
-           GameManager.Instance.EndPointReached();
+          CharacterController.Instance.Swim();
        }
    }
 }

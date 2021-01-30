@@ -11,6 +11,7 @@ public class startPath : MonoBehaviour
     {
         if(other.gameObject.tag=="Player"){
             GameManager.Instance.StartFollowPath(path);
+            GameManager.Instance.StopMove();
         }
     }
 }

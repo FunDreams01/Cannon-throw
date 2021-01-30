@@ -14,6 +14,7 @@ namespace PathCreation.Examples {
                      GameManager.Instance.WalkRight();
                 }
                 GameManager.Instance.StartWalk ();
+                GameManager.Instance.StopMove();
             }
         }
 
@@ -22,7 +23,7 @@ namespace PathCreation.Examples {
                 GameManager.Instance.StopWalk ();
                 GameManager.Instance.Fly ();
                 GetComponent<Collider> ().enabled = false;
-                GameManager.Instance.RedirectToPoint (go);
+                CharacterController.Instance.SetBackTOtrack(true,go);
             }
         }
     }
