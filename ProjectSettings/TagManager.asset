@@ -18,6 +18,7 @@ TagManager:
   - endPath
   - building
   - cannon
+  - FirstCannon
   layers:
   - Default
   - TransparentFX

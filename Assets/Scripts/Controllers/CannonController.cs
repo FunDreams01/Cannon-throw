@@ -47,18 +47,18 @@ public class CannonController : MonoBehaviour {
                             touchDidMove = true;
                             //swipe right
                             if ((touch.position.x > beginTouchPos.x)) {
-                                if (cannon.transform.eulerAngles.y < limitRotDegree || cannon.transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
-                                    cannon.transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
+                                    transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = transform.eulerAngles.y.ToString ();
                                     beginTouchPos = touch.position;
                                 }
 
                             }
                             //swipe left
                             if ((touch.position.x < beginTouchPos.x)) {
-                                if (cannon.transform.eulerAngles.y > (360 - limitRotDegree) || cannon.transform.eulerAngles.y <= limitRotDegree + 1) {
-                                    cannon.transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = cannon.transform.eulerAngles.y.ToString ();
+                                if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
+                                    transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
+                                    pos.text = transform.eulerAngles.y.ToString ();
                                     beginTouchPos = touch.position;
                                 }
                             }
@@ -85,13 +85,17 @@ public class CannonController : MonoBehaviour {
             }
         } else {
             if (rotateNow) {
-              // Smoothly rotates towards target 
-            var targetPoint = rotateTowards.transform.position;
-            var targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSmooth); 
-            if(Quaternion.Angle(targetRotation, transform.rotation)<0.01f){
-                rotateNow=false;
-            }   
+                // Smoothly rotates towards target 
+                var targetPoint = rotateTowards.transform.position;
+                var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
+                transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, Time.deltaTime * rotationSmooth);
+                if (Quaternion.Angle (targetRotation, transform.rotation) < 0.4f) {
+                    if (transform.tag == "cannon") {
+                        GameManager.Instance.GetCurrentCanon ().GetComponent<CannonController> ().ShootCannon ();
+                        GameManager.Instance.GetCurrentCanon ().GetComponent<CannonController> ().setState ("launch");
+                    }
+                    rotateNow = false;
+                }
             }
         }
 
@@ -116,12 +120,12 @@ public class CannonController : MonoBehaviour {
             } else {
                 GameManager.Instance.StopFlying ();
                 state = "adjustRotation";
-                GameManager.Instance.uninit();
+                GameManager.Instance.uninit ();
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
                 if (this.tag == "cannon") {
                     rotateNow = true;
-                    GameManager.Instance.RotateEnv();
-                    GameManager.Instance.changeCam("closeToFar");
+                    GameManager.Instance.RotateEnv ();
+                    GameManager.Instance.changeCam ("closeToFar");
                 }
             }
 
