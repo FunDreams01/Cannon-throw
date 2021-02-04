@@ -19,6 +19,7 @@ public class endline : MonoBehaviour
            GameManager.Instance.StartFollowPath(path);
            UIManager.Instance.EndState();
             GameManager.Instance.StopMove();
+            UIManager.Instance.decStamina=false;
         }
     }
 }

@@ -129,7 +129,9 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.changeCam ("closeToFar");
                 }
             }
-
+            if(GameManager.Instance.staminaValue<100){
+            UIManager.Instance.refullStamina=true;
+            }
         }
     }
 

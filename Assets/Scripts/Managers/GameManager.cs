@@ -14,7 +14,13 @@ public class GameManager : MonoBehaviour {
 
     GameObject currentCannon;
     GameObject trajectory0;
-     [Header ("Cannon settings")]
+
+    [Header ("Stamina Settings")]
+    public float staminaValue;
+    public float staminaDecrease;
+    public float staminaRefill;
+
+    [Header ("Cannon settings")]
     public float can_RotationDegree;
     public float can_RotationSpeed;
 
