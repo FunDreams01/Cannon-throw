@@ -8,16 +8,18 @@ public class CharacterController : MonoBehaviour {
     public GameObject endpoint;
     public GameObject endPath;
     public bool canMove = false;
-    public float translateSpeed;
-    public float translateLimit;
+    float translateSpeed;
+    float translateLimit;
+    float rotationSpeed;
+    float limitRotDegree;
     Vector3 initPos;
     GameObject point;
     public PathFollower[] path_followers;
     public static bool inCanon = true;
-    public float fallHeight;
+    float fallHeight;
     bool backToTrack = false;
     GameObject trackpoint;
-    public float fallSpeed;
+    float fallSpeed;
     Animator anim;
     GameObject myCollider;
     ColliderFix IdleColFix;
@@ -34,12 +36,13 @@ public class CharacterController : MonoBehaviour {
     bool isswimming = false;
     GameObject myCharacter;
     GameObject body;
-    public float speed;
+    float speed;
     GameObject myPoint;
     bool moveTowardsPoint = false;
-    public float slerpSpeed;
     bool rotate = false;
     bool startAlign = false;
+    public bool moveRight = false;
+    public bool moveLeft = false;
     private static CharacterController _instance;
     public static CharacterController Instance {
 
@@ -77,6 +80,10 @@ public class CharacterController : MonoBehaviour {
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
         Idle ();
         initPos = transform.position;
+        translateSpeed = GameManager.Instance.ch_TranslateSped;
+        translateLimit = GameManager.Instance.ch_TranslateLimit;
+        limitRotDegree = GameManager.Instance.ch_RotationLimit;
+        rotationSpeed = GameManager.Instance.ch_RotationSpeed;
     }
 
     // Update is called once per frame
@@ -112,46 +119,70 @@ public class CharacterController : MonoBehaviour {
                         case TouchPhase.Moved:
                             touchDidMove = true;
                             //swipe right
-                            if ((touch.position.x > beginTouchPos.x)) {
-                                if (transform.position.x >= 0) {
-                                    if (transform.position.x < translateLimit) {
+                            if (moveRight) {
+                                if ((touch.position.x > beginTouchPos.x)) {
+                                    if (transform.position.x >= 0) {
+                                        if (transform.position.x < translateLimit) {
+                                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        }
+                                    } else {
                                         transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                                     }
-                                } else {
-                                    transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
-                                }
-                                beginTouchPos = touch.position;
-                            }
-                            //swipe left
-                            if ((touch.position.x < beginTouchPos.x)) {
-                                if (transform.position.x >= 0) {
-                                    transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
-                                } else {
-                                    if (transform.position.x > -translateLimit) {
-                                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                    if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
+                                        transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
                                     }
+                                    beginTouchPos = touch.position;
                                 }
-                                beginTouchPos = touch.position;
                             }
+
+                            //swipe left
+                            if (moveLeft) {
+                                if ((touch.position.x < beginTouchPos.x)) {
+                                    if (transform.position.x >= 0) {
+                                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                    } else {
+                                        if (transform.position.x > -translateLimit) {
+                                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        }
+                                    }
+                                    if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
+                                        transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
+                                        beginTouchPos = touch.position;
+                                    }
+                                    beginTouchPos = touch.position;
+                                }
+                            }
+
                             break;
                     }
                 }
 
-                if (Input.GetKey (KeyCode.RightArrow)) {
-                    if (transform.position.x >= 0) {
-                        if (transform.position.x < translateLimit) {
+                if (moveRight) {
+                    if (Input.GetKey (KeyCode.RightArrow)) {
+                        if (transform.position.x >= 0) {
+                            if (transform.position.x < translateLimit) {
+                                transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                            }
+                        } else {
                             transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                         }
-                    } else {
-                        transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                        if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
+                            transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                        }
                     }
                 }
-                if (Input.GetKey (KeyCode.LeftArrow)) {
-                    if (transform.position.x >= 0) {
-                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
-                    } else {
-                        if (transform.position.x > -translateLimit) {
+
+                if (moveLeft) {
+                    if (Input.GetKey (KeyCode.LeftArrow)) {
+                        if (transform.position.x >= 0) {
                             transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                        } else {
+                            if (transform.position.x > -translateLimit) {
+                                transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                            }
+                        }
+                        if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
+                            transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
                         }
                     }
                 }
@@ -164,8 +195,8 @@ public class CharacterController : MonoBehaviour {
                 if (!fall) {
                     SetDirection ();
                 } else {
-                     if (transform.position.y > fallHeight) {
-                    transform.Translate (0, -1 * speed * Time.deltaTime, 0);
+                    if (transform.position.y > fallHeight) {
+                        transform.Translate (0, -1 * speed * Time.deltaTime, 0);
                     }
                 }
             }
@@ -195,9 +226,12 @@ public class CharacterController : MonoBehaviour {
         path_followers[i].enabled = false;
     }
     public void DestroyTrajectory (GameObject path) {
+        transform.rotation = Quaternion.Euler (0, transform.rotation.eulerAngles.y + 360, transform.rotation.eulerAngles.z + 360);
         Destroy (path);
-        transform.rotation = Quaternion.Euler (0, transform.rotation.y, transform.rotation.z);
         launch = true;
+    }
+    public void StraightenPlayer(){
+        transform.rotation = Quaternion.Euler (transform.rotation.eulerAngles.x +360, 0, transform.rotation.eulerAngles.z + 360);
     }
     public void SetSpeed (float s) {
         speed = s;
@@ -227,6 +261,7 @@ public class CharacterController : MonoBehaviour {
         //launch fall animation
         fall = true;
         launch = false;
+        this.GetComponent<CharacterController>().enabled=false;
     }
     public void Fly () {
         anim.SetInteger ("animParam", 1);
@@ -251,6 +286,7 @@ public class CharacterController : MonoBehaviour {
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
         myCollider.transform.eulerAngles = SwimColFix.rotation;
         isswimming = true;
+        CinemachineSwitcher.Instance.playAnim ("side");
     }
 
     public void launchCharacter () {
@@ -271,6 +307,7 @@ public class CharacterController : MonoBehaviour {
         GameObject dir = GameManager.Instance.GetCurrentCanon ().gameObject.transform.Find ("direction").gameObject;
         transform.position = dir.transform.position;
         transform.rotation = dir.transform.rotation;
+
     }
 
     public void StartMove () {

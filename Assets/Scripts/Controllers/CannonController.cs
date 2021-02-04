@@ -12,8 +12,8 @@ public class CannonController : MonoBehaviour {
     Vector2 beginTouchPos;
     bool touchDidMove = false;
     public float epsilon = 5;
-    public float rotationSpeed = 40;
-    public float limitRotDegree = 25;
+     float rotationSpeed;
+     float limitRotDegree;
     public GameObject kaboom;
     public string state = "standBy";
     public bool shoot = false;
@@ -29,6 +29,8 @@ public class CannonController : MonoBehaviour {
         kaboom = cannon.transform.Find ("kaboom").gameObject;
         anim = kaboom.GetComponent<Animator> ();
         vfx = transform.Find ("Light").gameObject;
+        rotationSpeed=GameManager.Instance.can_RotationSpeed;
+        limitRotDegree=GameManager.Instance.can_RotationDegree;
     }
 
     // Update is called once per frame
@@ -52,7 +54,6 @@ public class CannonController : MonoBehaviour {
                                     pos.text = transform.eulerAngles.y.ToString ();
                                     beginTouchPos = touch.position;
                                 }
-
                             }
                             //swipe left
                             if ((touch.position.x < beginTouchPos.x)) {

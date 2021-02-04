@@ -7,23 +7,32 @@ namespace PathCreation.Examples {
         public GameObject go;
         private void OnCollisionEnter (Collision other) {
             if (other.gameObject.tag == "Player") {
-
                 if (this.gameObject.tag == "wallLeft") {
-                     GameManager.Instance.WalkLeft();
+                    CharacterController.Instance.moveLeft = false;
+                    GameManager.Instance.WalkLeft ();
                 } else if (this.gameObject.tag == "wallRight") {
-                     GameManager.Instance.WalkRight();
+                    CharacterController.Instance.moveRight = false;
+                    GameManager.Instance.WalkRight ();
                 }
                 GameManager.Instance.StartWalk ();
-                GameManager.Instance.StopMove();
+                //GameManager.Instance.StopMove();
+                CharacterController.Instance.StraightenPlayer();
             }
         }
 
         private void OnCollisionExit (Collision other) {
             if (other.gameObject.tag == "Player") {
-                GameManager.Instance.StopWalk ();
+                if (this.gameObject.tag == "wallLeft") {
+                    CharacterController.Instance.moveLeft = true;
+                    GameManager.Instance.WalkLeft ();
+                } else if (this.gameObject.tag == "wallRight") {
+                    CharacterController.Instance.moveRight = true;
+                    GameManager.Instance.WalkRight ();
+                }
+                //GameManager.Instance.StopWalk ();
                 GameManager.Instance.Fly ();
-                GetComponent<Collider> ().enabled = false;
-                CharacterController.Instance.SetBackTOtrack(true,go);
+                //GetComponent<Collider> ().enabled = false;
+                //CharacterController.Instance.SetBackTOtrack(true,go);
             }
         }
     }

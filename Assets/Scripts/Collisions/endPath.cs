@@ -14,6 +14,8 @@ public class endPath : MonoBehaviour
             GameManager.Instance.DestroyTrajectory(path.gameObject);
             GameManager.Instance.StopFollowPath(follower);
             GameManager.Instance.StartMove();
+            CharacterController.Instance.moveLeft=true;
+            CharacterController.Instance.moveRight=true;
         }
     }
 }

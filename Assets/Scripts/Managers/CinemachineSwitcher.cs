@@ -46,4 +46,16 @@ public class CinemachineSwitcher : MonoBehaviour
             }
         }
     }
+
+    public string GetCurrentAnim(){
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("start")){
+            return "start";
+        }else if(anim.GetCurrentAnimatorStateInfo(0).IsName("main")){
+            return "main";
+        }else if(anim.GetCurrentAnimatorStateInfo(0).IsName("side")){
+            return "side";
+        }else{
+            return "";
+        }
+    }
 }
