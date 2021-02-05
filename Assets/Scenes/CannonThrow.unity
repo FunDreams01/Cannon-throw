@@ -9870,6 +9870,8 @@ MonoBehaviour:
   pathCreator: {fileID: 1658723854}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!114 &1319367905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9885,6 +9887,8 @@ MonoBehaviour:
   pathCreator: {fileID: 1116341800}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!114 &1319367906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9900,6 +9904,8 @@ MonoBehaviour:
   pathCreator: {fileID: 682698015}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!114 &1319367907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9915,6 +9921,8 @@ MonoBehaviour:
   pathCreator: {fileID: 1051146293}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!4 &1319367908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 165297222682939533, guid: 6a89df6497460ee4d9bacee2fdc2d665,
@@ -9936,6 +9944,8 @@ MonoBehaviour:
   pathCreator: {fileID: 270490047}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!114 &1319367910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9951,6 +9961,8 @@ MonoBehaviour:
   pathCreator: {fileID: 1985617087}
   endOfPathInstruction: 2
   speed: 5
+  addedLaunchSpeed: 0
+  decAmountLaunch: 0
 --- !u!1001 &1329433991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16863,7 +16875,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587c2f68d4394004fb5ab0b2d107cde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchSpeed: 20
+  addedLaunchSpeed: 35
+  decAmountLaunch: 0.05
   normalForce: 25
   goodForce: 50
   perfectForce: 75

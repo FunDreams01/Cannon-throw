@@ -8,8 +8,6 @@ public class CharacterController : MonoBehaviour {
     public GameObject endpoint;
     public GameObject endPath;
     public bool canMove = false;
-    float addedLaunchSpeed;
-    float decAmountLaunch;
     float translateSpeed;
     float translateLimit;
     float rotationSpeed;
@@ -32,7 +30,7 @@ public class CharacterController : MonoBehaviour {
     bool isWallWalking = false;
      float wallWalkingSpeed;
     public bool launch = false;
-    bool boom=false;
+    public bool boom=false;
     Vector2 beginTouchPos;
     bool touchDidMove;
     bool fall = false;
@@ -88,8 +86,7 @@ public class CharacterController : MonoBehaviour {
         limitRotDegree = GameManager.Instance.ch_RotationLimit;
         rotationSpeed = GameManager.Instance.ch_RotationSpeed;
         wallWalkingSpeed=GameManager.Instance.wallSpeed;
-        addedLaunchSpeed=GameManager.Instance.addedLaunchSpeed;
-        decAmountLaunch=GameManager.Instance.decAmountLaunch;
+      
     }
 
     // Update is called once per frame
@@ -103,16 +100,7 @@ public class CharacterController : MonoBehaviour {
 
         if (launch) {
             UIManager.Instance.decStamina=true;
-            if(boom){
-                if(addedLaunchSpeed>0){
-                    transform.Translate (0, 0, 1 * (speed+addedLaunchSpeed) * Time.deltaTime);
-                    addedLaunchSpeed=addedLaunchSpeed-decAmountLaunch;
-                }else{
-                    boom=false;
-                }
-            }else{
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
-            }
 
             if (backToTrack) {
                 if (trackpoint != null) {
@@ -309,6 +297,7 @@ public class CharacterController : MonoBehaviour {
 
     public void launchCharacter () {
         launch = true;
+        boom=true;
         FollowPath (0);
         Fly ();
     }
