@@ -6,14 +6,18 @@ namespace PathCreation.Examples { }
 
 public class GameManager : MonoBehaviour {
     [Header ("Launch Forces")]
+    public float addedLaunchSpeed;
+    public float decAmountLaunch;
     public float normalForce;
     public float goodForce;
     public float perfectForce;
-
     public string selectedForce;
 
     GameObject currentCannon;
     GameObject trajectory0;
+    
+    [Header ("Wall Settings")]
+    public float wallSpeed;
 
     [Header ("Stamina Settings")]
     public float staminaValue;

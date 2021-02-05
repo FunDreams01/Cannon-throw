@@ -194,6 +194,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 995496530, guid: d87576b930e36d04c942921ce1c33b11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1221561821, guid: d87576b930e36d04c942921ce1c33b11, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -436,7 +440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37572482}
-  m_LocalRotation: {x: 4.0371316e-16, y: -0.6165862, z: 3.161793e-16, w: 0.7872874}
+  m_LocalRotation: {x: -4.0371321e-16, y: -0.6165862, z: -3.161793e-16, w: 0.7872874}
   m_LocalPosition: {x: 15.8, y: 0, z: 6.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7419,7 +7423,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918512897}
-  m_LocalRotation: {x: 0.06516788, y: 0.000000017169805, z: -0.0000000011213023, w: 0.9978743}
+  m_LocalRotation: {x: 0.06516786, y: -0.000000017169805, z: 0.000000001121304, w: 0.9978743}
   m_LocalPosition: {x: 0, y: 2.8999999, z: -2.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -16799,6 +16803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaBar: {fileID: 21863351}
   refullStamina: 0
+  decStamina: 0
   timeSlide: 5
   player: {fileID: 1319367903}
   c1: {fileID: 1660665918}
@@ -16858,10 +16863,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587c2f68d4394004fb5ab0b2d107cde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launchSpeed: 20
   normalForce: 25
   goodForce: 50
   perfectForce: 75
   selectedForce: 
+  wallSpeed: 50
   staminaValue: 100
   staminaDecrease: 0.05
   staminaRefill: 0.5
@@ -27995,17 +28002,17 @@ PrefabInstance:
     - target: {fileID: 7632196051886900638, guid: 24677e27588b4584ea2498d911458b36,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06516788
+      value: 0.06516786
       objectReference: {fileID: 0}
     - target: {fileID: 7632196051886900638, guid: 24677e27588b4584ea2498d911458b36,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017169805
+      value: -0.000000017169805
       objectReference: {fileID: 0}
     - target: {fileID: 7632196051886900638, guid: 24677e27588b4584ea2498d911458b36,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000011213023
+      value: 0.000000001121304
       objectReference: {fileID: 0}
     - target: {fileID: 7632196051886900638, guid: 24677e27588b4584ea2498d911458b36,
         type: 3}
