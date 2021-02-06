@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public float ch_TranslateLimit;
     public float ch_RotationLimit;
     public float ch_RotationSpeed;
+    public float fallTimer;
 
     private static GameManager _instance;
     public static GameManager Instance {

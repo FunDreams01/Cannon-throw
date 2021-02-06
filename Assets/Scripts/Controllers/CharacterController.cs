@@ -10,6 +10,7 @@ public class CharacterController : MonoBehaviour {
     public bool canMove = false;
     float translateSpeed;
     float translateLimit;
+    public float fallTimer;
     float rotationSpeed;
     float limitRotDegree;
     Vector3 initPos;
@@ -28,12 +29,12 @@ public class CharacterController : MonoBehaviour {
     ColliderFix WLColFix;
     ColliderFix SwimColFix;
     bool isWallWalking = false;
-     float wallWalkingSpeed;
+    float wallWalkingSpeed;
     public bool launch = false;
-    public bool boom=false;
+    public bool boom = false;
     Vector2 beginTouchPos;
     bool touchDidMove;
-    bool fall = false;
+    public bool fall = false;
     bool isswimming = false;
     GameObject myCharacter;
     GameObject body;
@@ -80,14 +81,14 @@ public class CharacterController : MonoBehaviour {
         WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
         Idle ();
-        initPos = transform.position;
-        translateSpeed = GameManager.Instance.ch_TranslateSped;
-        translateLimit = GameManager.Instance.ch_TranslateLimit;
-        limitRotDegree = GameManager.Instance.ch_RotationLimit;
-        rotationSpeed = GameManager.Instance.ch_RotationSpeed;
-        wallWalkingSpeed=GameManager.Instance.wallSpeed;
-      
-    }
+            initPos = transform.position;
+            translateSpeed = GameManager.Instance.ch_TranslateSped;
+            translateLimit = GameManager.Instance.ch_TranslateLimit;
+            limitRotDegree = GameManager.Instance.ch_RotationLimit;
+            rotationSpeed = GameManager.Instance.ch_RotationSpeed;
+            wallWalkingSpeed = GameManager.Instance.wallSpeed;
+            fallTimer = GameManager.Instance.fallTimer;
+        }
 
     // Update is called once per frame
     void Update () {
@@ -99,7 +100,7 @@ public class CharacterController : MonoBehaviour {
         }
 
         if (launch) {
-            UIManager.Instance.decStamina=true;
+            UIManager.Instance.decStamina = true;
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
 
             if (backToTrack) {
@@ -128,13 +129,15 @@ public class CharacterController : MonoBehaviour {
                                 if ((touch.position.x > beginTouchPos.x)) {
                                     if (transform.position.x >= 0) {
                                         if (transform.position.x < translateLimit) {
-                                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                            //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                            transform.position = transform.position + Vector3.right * Time.deltaTime * translateSpeed;
                                         }
                                     } else {
-                                        transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        //transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        transform.position = transform.position + Vector3.right * Time.deltaTime * translateSpeed;
                                     }
-                                    if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
-                                        transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                                    if ((transform.eulerAngles.z < limitRotDegree) || transform.eulerAngles.z >= (360 - limitRotDegree - 10)) {
+                                        transform.Rotate (0, 0, 1 * rotationSpeed * Time.deltaTime);
                                     }
                                     beginTouchPos = touch.position;
                                 }
@@ -144,15 +147,16 @@ public class CharacterController : MonoBehaviour {
                             if (moveLeft) {
                                 if ((touch.position.x < beginTouchPos.x)) {
                                     if (transform.position.x >= 0) {
-                                        transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        //  transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                        transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
                                     } else {
                                         if (transform.position.x > -translateLimit) {
-                                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                            //transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                            transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
                                         }
                                     }
-                                    if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
-                                        transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
-                                        beginTouchPos = touch.position;
+                                    if (transform.eulerAngles.z > (360 - limitRotDegree) || transform.eulerAngles.z <= limitRotDegree + 10) {
+                                        transform.Rotate (0, 0, -1 * rotationSpeed * Time.deltaTime);
                                     }
                                     beginTouchPos = touch.position;
                                 }
@@ -166,13 +170,15 @@ public class CharacterController : MonoBehaviour {
                     if (Input.GetKey (KeyCode.RightArrow)) {
                         if (transform.position.x >= 0) {
                             if (transform.position.x < translateLimit) {
-                                transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                                transform.position = transform.position + Vector3.right * Time.deltaTime * translateSpeed;
                             }
                         } else {
-                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                            //transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
+                            transform.position = transform.position + Vector3.right * Time.deltaTime * translateSpeed;
                         }
-                        if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
-                            transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
+                        if ((transform.eulerAngles.z < limitRotDegree) || transform.eulerAngles.z >= (360 - limitRotDegree - 10)) {
+                            transform.Rotate (0, 0, 1 * rotationSpeed * Time.deltaTime);
                         }
                     }
                 }
@@ -180,30 +186,35 @@ public class CharacterController : MonoBehaviour {
                 if (moveLeft) {
                     if (Input.GetKey (KeyCode.LeftArrow)) {
                         if (transform.position.x >= 0) {
-                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                            //  transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                            transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
+
                         } else {
                             if (transform.position.x > -translateLimit) {
-                                transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                //transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
+                                transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
+
                             }
                         }
-                        if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
-                            transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
+                        if (transform.eulerAngles.z > (360 - limitRotDegree) || transform.eulerAngles.z <= limitRotDegree + 10) {
+                            transform.Rotate (0, 0, -1 * rotationSpeed * Time.deltaTime);
                         }
                     }
                 }
             }
 
         } else {
-            UIManager.Instance.decStamina=false;
+            UIManager.Instance.decStamina = false;
             if (isswimming) {
 
             } else {
                 if (!fall) {
                     SetDirection ();
                 } else {
-                    if (transform.position.y > fallHeight) {
+                    if (fallTimer > 0) {
+                        fallTimer = fallTimer - Time.deltaTime;
                         transform.Translate (0, -1 * speed * Time.deltaTime, 0);
-                    }
+                    } 
                 }
             }
 
@@ -236,8 +247,8 @@ public class CharacterController : MonoBehaviour {
         Destroy (path);
         launch = true;
     }
-    public void StraightenPlayer(){
-        transform.rotation = Quaternion.Euler (transform.rotation.eulerAngles.x +360, 0, transform.rotation.eulerAngles.z + 360);
+    public void StraightenPlayer () {
+        transform.rotation = Quaternion.Euler (transform.rotation.eulerAngles.x + 360, 0, transform.rotation.eulerAngles.z + 360);
     }
     public void SetSpeed (float s) {
         speed = s;
@@ -267,7 +278,9 @@ public class CharacterController : MonoBehaviour {
         //launch fall animation
         fall = true;
         launch = false;
-        this.GetComponent<CharacterController>().enabled=false;
+        
+        CinemachineSwitcher.Instance.playAnim ("down");
+        CinemachineSwitcher.Instance.StopFollowing ("down");
     }
     public void Fly () {
         anim.SetInteger ("animParam", 1);
@@ -297,7 +310,7 @@ public class CharacterController : MonoBehaviour {
 
     public void launchCharacter () {
         launch = true;
-        boom=true;
+        boom = true;
         FollowPath (0);
         Fly ();
     }

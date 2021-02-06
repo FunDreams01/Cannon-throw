@@ -14,6 +14,7 @@ namespace PathCreation.Examples {
                     CharacterController.Instance.moveRight = false;
                     GameManager.Instance.WalkRight ();
                 }
+                UIManager.Instance.decStamina=false;
                 GameManager.Instance.StartWalk ();
                 //GameManager.Instance.StopMove();
                 CharacterController.Instance.StraightenPlayer();
@@ -31,6 +32,7 @@ namespace PathCreation.Examples {
                 }
                 //GameManager.Instance.StopWalk ();
                 GameManager.Instance.Fly ();
+                UIManager.Instance.decStamina=true;
                 //GetComponent<Collider> ().enabled = false;
                 //CharacterController.Instance.SetBackTOtrack(true,go);
             }
