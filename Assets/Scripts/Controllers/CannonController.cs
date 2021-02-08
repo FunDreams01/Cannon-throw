@@ -80,6 +80,7 @@ public class CannonController : MonoBehaviour {
                     }
                 } else {
                     GameManager.Instance.launchCharacter ();
+                    UIManager.Instance.decStamina = true;       
                     GameManager.Instance.StartFollowPath (index);
                     state = "launched";
                 }

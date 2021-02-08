@@ -28,12 +28,11 @@ public class ForceSelector : MonoBehaviour {
        arrowAnim.enabled = false;
         forceSlected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
-           //to be changed to ui behavior of orce selection
             speed=GameManager.Instance.GetForce(hit.collider.tag);
             GameManager.Instance.SetSpeed(speed);
             GameManager.Instance.SetForce(hit.collider.tag);
             GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().ShootCannon();
-            GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");            
+            GameManager.Instance.GetCurrentCanon().GetComponent<CannonController>().setState("launch");     
             UIManager.Instance.tapOff();
             UIManager.Instance.slideOn();         
         }

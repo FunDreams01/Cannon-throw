@@ -6,20 +6,14 @@ public class endline : MonoBehaviour
 {
     public int path;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Player"){
+            UIManager.Instance.decStamina = false;       
             GameManager.Instance.AlignEnd();
            GameManager.Instance.StartFollowPath(path);
            UIManager.Instance.EndState();
             GameManager.Instance.StopMove();
-            UIManager.Instance.decStamina=false;
         }
     }
 }

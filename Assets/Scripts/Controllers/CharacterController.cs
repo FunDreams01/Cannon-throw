@@ -100,7 +100,6 @@ public class CharacterController : MonoBehaviour {
         }
 
         if (launch) {
-            UIManager.Instance.decStamina = true;
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
 
             if (backToTrack) {

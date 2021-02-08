@@ -157,4 +157,5 @@ public class UIManager : MonoBehaviour {
         yield return new WaitForSeconds (timeSlide);
         slidePanel.SetActive (false);
     }
+
 }

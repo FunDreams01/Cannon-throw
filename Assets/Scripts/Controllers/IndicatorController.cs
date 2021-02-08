@@ -42,7 +42,8 @@ public class IndicatorController : MonoBehaviour {
                             RaycastHit raycastHit;
                             if (Physics.Raycast (raycast, out raycastHit)) {
                                 if (raycastHit.collider.CompareTag ("indicator")) {
-                                    hitIndicator.GetComponent<ForceSelector> ().selectForce ();                 
+                                    hitIndicator.GetComponent<ForceSelector> ().selectForce ();  
+                                                   
                                 }
                             }
                         }
