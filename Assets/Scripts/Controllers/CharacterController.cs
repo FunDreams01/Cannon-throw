@@ -213,6 +213,7 @@ public class CharacterController : MonoBehaviour {
                 } else {
                     if (fallTimer > 0) {
                         fallTimer = fallTimer - Time.deltaTime;
+                        transform.rotation = Quaternion.Euler (0, 0,0);
                         transform.Translate (0, -1 * speed * Time.deltaTime, 0);
                     } 
                 }
