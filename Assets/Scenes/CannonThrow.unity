@@ -440,7 +440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37572482}
-  m_LocalRotation: {x: -4.0371316e-16, y: -0.6165862, z: -3.161793e-16, w: 0.7872874}
+  m_LocalRotation: {x: 4.0371321e-16, y: -0.6165862, z: 3.161793e-16, w: 0.7872874}
   m_LocalPosition: {x: 15.8, y: 0.3399999, z: 6.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7562,7 +7562,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893103531}
-  m_LocalRotation: {x: 0.4993431, y: -0.000000037427075, z: 0.000000021570703, w: 0.86640435}
+  m_LocalRotation: {x: 0.49934313, y: -0.000000025820857, z: 0.000000014881581, w: 0.86640435}
   m_LocalPosition: {x: 0, y: 17.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11619,18 +11619,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1434918174}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1434918177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434918176}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052c5db7caae8f140a60bba60aa59319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1434918178
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12426,7 +12414,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526090040}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 900b68a395a1c824eb986aef02261cda, type: 3}
   m_Name: 
@@ -12913,6 +12901,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: building
       objectReference: {fileID: 0}
+    - target: {fileID: 1171200679094549952, guid: 066140628327ddf4488910de61290a1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1948686875163109242, guid: 066140628327ddf4488910de61290a1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12997,18 +12990,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1574834690}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1574834693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574834692}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052c5db7caae8f140a60bba60aa59319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1574834694
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13024,7 +13005,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1001 &1586851424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13743,8 +13724,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658723852}
-  m_LocalRotation: {x: -9.303943e-13, y: -0.000000029802322, z: -3.2708786e-13, w: 1}
-  m_LocalPosition: {x: -0.12605204, y: 10.752455, z: 9.501027}
+  m_LocalRotation: {x: -9.305226e-13, y: -0, z: -3.2719335e-13, w: 1}
+  m_LocalPosition: {x: -0.12712067, y: 10.752455, z: 9.517556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1384659238}
@@ -14749,18 +14730,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1773835134}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1773835137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773835136}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052c5db7caae8f140a60bba60aa59319, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1773835138
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18415,7 +18384,7 @@ MonoBehaviour:
   staminaValue: 100
   staminaDecrease: 0.05
   staminaRefill: 0.5
-  can_RotationDegree: 25
+  can_RotationDegree: 15
   can_RotationSpeed: 40
   ch_TranslateSped: 30
   ch_TranslateLimit: 40

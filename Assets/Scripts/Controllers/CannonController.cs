@@ -94,7 +94,7 @@ public class CannonController : MonoBehaviour {
                 if (Quaternion.Angle (targetRotation, transform.rotation) < 0.4f) {
                     if (transform.tag == "cannon") {
                         GameManager.Instance.GetCurrentCanon ().GetComponent<CannonController> ().ShootCannon ();
-                        GameManager.Instance.GetCurrentCanon ().GetComponent<CannonController> ().setState ("launch");
+                        GameManager.Instance.GetCurrentCanon ().GetComponent<CannonController> ().setState ("standBy");
                     }
                     rotateNow = false;
                 }
