@@ -38,6 +38,7 @@ public class CharacterController : MonoBehaviour {
     bool isswimming = false;
     GameObject myCharacter;
     GameObject body;
+    bool reset_character=true;
     float speed;
     GameObject myPoint;
     bool moveTowardsPoint = false;
@@ -45,6 +46,9 @@ public class CharacterController : MonoBehaviour {
     bool startAlign = false;
     public bool moveRight = false;
     public bool moveLeft = false;
+   public float rotationleft = 360;
+    float dashSpeed;
+    public bool spin = false;
     private static CharacterController _instance;
     public static CharacterController Instance {
 
@@ -81,14 +85,15 @@ public class CharacterController : MonoBehaviour {
         WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
         Idle ();
-            initPos = transform.position;
-            translateSpeed = GameManager.Instance.ch_TranslateSped;
-            translateLimit = GameManager.Instance.ch_TranslateLimit;
-            limitRotDegree = GameManager.Instance.ch_RotationLimit;
-            rotationSpeed = GameManager.Instance.ch_RotationSpeed;
-            wallWalkingSpeed = GameManager.Instance.wallSpeed;
-            fallTimer = GameManager.Instance.fallTimer;
-        }
+        initPos = transform.position;
+        translateSpeed = GameManager.Instance.ch_TranslateSped;
+        translateLimit = GameManager.Instance.ch_TranslateLimit;
+        limitRotDegree = GameManager.Instance.ch_RotationLimit;
+        rotationSpeed = GameManager.Instance.ch_RotationSpeed;
+        wallWalkingSpeed = GameManager.Instance.wallSpeed;
+        fallTimer = GameManager.Instance.fallTimer;
+        dashSpeed=GameManager.Instance.dashSpeed;
+    }
 
     // Update is called once per frame
     void Update () {
@@ -98,8 +103,27 @@ public class CharacterController : MonoBehaviour {
         if (isWallWalking) {
             StartWallWalking ();
         }
+        if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Idle") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Flying") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Swimming")) {
+            if(reset_character){
+            reset ();
+            }
+        }
 
+        if (spin) {
+            float rotation = dashSpeed * Time.deltaTime;
+            if (rotationleft > rotation) {
+                rotationleft -= rotation;
+            } else {
+                rotation = rotationleft;
+                rotationleft = 0;
+                spin=false;
+                rotationleft=360;
+                reset_character=true;
+            }
+            myCharacter.transform.Rotate (0, 0, -rotation);
+        }
         if (launch) {
+
             transform.Translate (0, 0, 1 * speed * Time.deltaTime);
 
             if (backToTrack) {
@@ -212,9 +236,9 @@ public class CharacterController : MonoBehaviour {
                 } else {
                     if (fallTimer > 0) {
                         fallTimer = fallTimer - Time.deltaTime;
-                        transform.rotation = Quaternion.Euler (0, 0,0);
+                        transform.rotation = Quaternion.Euler (0, 0, 0);
                         transform.Translate (0, -1 * speed * Time.deltaTime, 0);
-                    } 
+                    }
                 }
             }
 
@@ -231,6 +255,7 @@ public class CharacterController : MonoBehaviour {
     }
     public void StopFlying () {
         launch = false;
+        anim.SetInteger ("animParam", 0);
     }
     public float GetSpeed () {
         return speed;
@@ -273,12 +298,16 @@ public class CharacterController : MonoBehaviour {
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
         myCollider.transform.eulerAngles = IdleColFix.rotation;
     }
-
+    public void Dash () {
+        anim.SetInteger ("animParam", 5);
+        myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
+        myCollider.transform.eulerAngles = FlyColFix.rotation;
+    }
     public void Fall () {
         //launch fall animation
         fall = true;
         launch = false;
-        
+
         CinemachineSwitcher.Instance.playAnim ("down");
         CinemachineSwitcher.Instance.StopFollowing ("down");
     }
@@ -311,7 +340,10 @@ public class CharacterController : MonoBehaviour {
     public void launchCharacter () {
         launch = true;
         boom = true;
-        FollowPath (0);
+        if (GameManager.Instance.GetSelectedForce () == "perfect") {
+            reset_character=false;
+            spin=true;
+        } 
         Fly ();
     }
 
@@ -327,7 +359,6 @@ public class CharacterController : MonoBehaviour {
         GameObject dir = GameManager.Instance.GetCurrentCanon ().gameObject.transform.Find ("direction").gameObject;
         transform.position = dir.transform.position;
         transform.rotation = dir.transform.rotation;
-
     }
 
     public void StartMove () {
@@ -346,5 +377,10 @@ public class CharacterController : MonoBehaviour {
     public void SetBackTOtrack (bool b, GameObject g) {
         backToTrack = b;
         trackpoint = g;
+    }
+
+    public void reset () {
+        myCharacter.transform.localPosition = new Vector3 (0, 0, 0);
+        myCharacter.transform.localRotation = Quaternion.identity;
     }
 }

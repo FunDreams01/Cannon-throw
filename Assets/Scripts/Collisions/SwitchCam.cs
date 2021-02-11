@@ -17,9 +17,9 @@ public class SwitchCam : MonoBehaviour {
     if(other.gameObject.tag=="Player"){
       if(CinemachineSwitcher.Instance.GetCurrentAnim()=="start"){
         CinemachineSwitcher.Instance.playAnim("main");
-      }/*else if(CinemachineSwitcher.Instance.GetCurrentAnim()=="main"){
+      }else if(CinemachineSwitcher.Instance.GetCurrentAnim()=="main"){
          CinemachineSwitcher.Instance.playAnim("start");
-      }*/
+      }
     }
   }
 }

@@ -110,24 +110,24 @@ public class CannonController : MonoBehaviour {
     public void ShootCannon () {
         shoot = true;
     }
-    private void OnTriggerEnter (Collider other) {
+    private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
+            CharacterController.Instance.reset();
             bool launch = GameManager.Instance.GetPlayerState ();
             if (!launch) {
                 if (state == "standBy") {
                     GameManager.Instance.SetCurrentCanon (this.gameObject);
                     GameManager.Instance.SetDirection ();
-                    GameManager.Instance.changeCam ("closeToFar");
                 }
             } else {
-                GameManager.Instance.StopFlying ();
+                CharacterController.Instance.launch=false;
+                GameManager.Instance.StopFlying ();  
                 state = "adjustRotation";
                 GameManager.Instance.uninit ();
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
                 if (this.tag == "cannon") {
                     rotateNow = true;
                     GameManager.Instance.RotateEnv ();
-                    GameManager.Instance.changeCam ("closeToFar");
                 }
             }
             if(GameManager.Instance.staminaValue<100){

@@ -11,8 +11,8 @@ public class endPath : MonoBehaviour
     public int follower;
     void OnTriggerEnter(Collider other){
         if(other.gameObject.tag=="Player"){
-            GameManager.Instance.DestroyTrajectory(path.gameObject);
             GameManager.Instance.StopFollowPath(follower);
+            GameManager.Instance.DestroyTrajectory(path.gameObject);
             GameManager.Instance.StartMove();
             CharacterController.Instance.moveLeft=true;
             CharacterController.Instance.moveRight=true;

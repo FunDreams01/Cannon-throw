@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     public float perfectForce;
     public string selectedForce;
 
-    GameObject currentCannon;
+    public GameObject currentCannon;
     GameObject trajectory0;
     
     [Header ("Wall Settings")]
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
     [Header ("Character settings")]
     public float ch_TranslateSped;
     public float ch_TranslateLimit;
+    public float dashSpeed;
     public float ch_RotationLimit;
     public float ch_RotationSpeed;
     public float fallTimer;
