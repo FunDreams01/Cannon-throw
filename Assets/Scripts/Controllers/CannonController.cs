@@ -120,7 +120,7 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.SetDirection ();
                 }
             } else {
-                CharacterController.Instance.launch=false;
+                            Debug.Log("*********");
                 GameManager.Instance.StopFlying ();  
                 state = "adjustRotation";
                 GameManager.Instance.uninit ();

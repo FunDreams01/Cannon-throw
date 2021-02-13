@@ -28,6 +28,8 @@ public class CharacterController : MonoBehaviour {
     ColliderFix WRColFix;
     ColliderFix WLColFix;
     ColliderFix SwimColFix;
+    Vector3 modelFixWL;
+    Vector3 modelFixWR;
     bool isWallWalking = false;
     float wallWalkingSpeed;
     public bool launch = false;
@@ -79,11 +81,13 @@ public class CharacterController : MonoBehaviour {
         myCollider = body.transform.Find ("collider").gameObject;
         path_followers = this.GetComponents<PathFollower> ();
         anim = myCharacter.GetComponent<Animator> ();
-        IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.063f), new Vector3 (90, 0, 0));
-        FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.145f, 0.17f), new Vector3 (90, 0, 0));
-        WLColFix = new ColliderFix ("Idle", new Vector3 (-0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
-        WRColFix = new ColliderFix ("Idle", new Vector3 (0.086f, 0.145f, 0.06f), new Vector3 (-90, 0, 0));
+        IdleColFix = new ColliderFix ("Idle", new Vector3 (0, 0.32f, 0.7f), new Vector3 (90, 0, 0));
+        FlyColFix = new ColliderFix ("Idle", new Vector3 (0, 0.44f, 0.38f), new Vector3 (90, 0, 0));
+        WLColFix = new ColliderFix ("Idle", new Vector3 (0, 0, 0), new Vector3 (-90, 0, 0));
+        WRColFix = new ColliderFix ("Idle", new Vector3 (0, 0, 0), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
+        modelFixWL=new Vector3(-0.22f, -1.71f, 0    );
+        modelFixWR=new Vector3(0.22f, -1, 0);
         Idle ();
         initPos = transform.position;
         translateSpeed = GameManager.Instance.ch_TranslateSped;
@@ -297,42 +301,43 @@ public class CharacterController : MonoBehaviour {
         anim.SetInteger ("animParam", 0);
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
         myCollider.transform.eulerAngles = IdleColFix.rotation;
+        myCharacter.transform.localPosition=Vector3.zero; 
+
     }
-    public void Dash () {
-        anim.SetInteger ("animParam", 5);
-        myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
-        myCollider.transform.eulerAngles = FlyColFix.rotation;
-    }
+
     public void Fall () {
         //launch fall animation
         fall = true;
         launch = false;
-
         CinemachineSwitcher.Instance.playAnim ("down");
         CinemachineSwitcher.Instance.StopFollowing ("down");
     }
     public void Fly () {
         anim.SetInteger ("animParam", 1);
         myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
-        myCollider.transform.eulerAngles = FlyColFix.rotation;
-    }
+        myCollider.transform.localEulerAngles = FlyColFix.rotation;   
+        myCharacter.transform.localPosition=Vector3.zero; 
+        }
 
     public void WalkLeft () {
         anim.SetInteger ("animParam", 2);
         myCollider.transform.position = transform.TransformPoint (WLColFix.position);
-        myCollider.transform.eulerAngles = WLColFix.rotation;
+        myCollider.transform.localEulerAngles = WLColFix.rotation;
+        myCharacter.transform.localPosition=modelFixWL;
     }
 
     public void WalkRight () {
         anim.SetInteger ("animParam", 3);
         myCollider.transform.position = transform.TransformPoint (WRColFix.position);
-        myCollider.transform.eulerAngles = WRColFix.rotation;
+        myCollider.transform.localEulerAngles = WRColFix.rotation;
+        myCharacter.transform.localPosition=modelFixWR;
     }
 
     public void Swim () {
         anim.SetInteger ("animParam", 4);
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
-        myCollider.transform.eulerAngles = SwimColFix.rotation;
+        myCollider.transform.localEulerAngles = SwimColFix.rotation;
+        myCharacter.transform.localPosition=Vector3.zero; 
         isswimming = true;
         CinemachineSwitcher.Instance.playAnim ("side");
     }
@@ -383,4 +388,5 @@ public class CharacterController : MonoBehaviour {
         myCharacter.transform.localPosition = new Vector3 (0, 0, 0);
         myCharacter.transform.localRotation = Quaternion.identity;
     }
+
 }

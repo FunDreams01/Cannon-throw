@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour {
         }
 
        if(decStamina){
-        if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Flying")) {
+        /*if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Flying")) {
             GameManager.Instance.staminaValue = GameManager.Instance.staminaValue - GameManager.Instance.staminaDecrease;
             if (GameManager.Instance.staminaValue > 0) {
                 staminaBar.fillAmount = GameManager.Instance.staminaValue / 100;
@@ -93,7 +93,7 @@ public class UIManager : MonoBehaviour {
                 UIManager.Instance.closeGamePanel ();
                 UIManager.Instance.Lost ();
             }
-            }
+            }*/
         }
 
 

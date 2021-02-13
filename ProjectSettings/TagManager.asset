@@ -19,6 +19,7 @@ TagManager:
   - building
   - cannon
   - FirstCannon
+  - cannon_stop
   layers:
   - Default
   - TransparentFX
