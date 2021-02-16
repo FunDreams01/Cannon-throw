@@ -5,32 +5,31 @@ using UnityEngine.UI;
 
 public class CannonController : MonoBehaviour {
     public int index;
-    public GameObject vfx;
-    public Text dist;
-    public Text pos;
+ GameObject vfx;
     GameObject cannon;
     Vector2 beginTouchPos;
     bool touchDidMove = false;
-    public float epsilon = 5;
-     float rotationSpeed;
-     float limitRotDegree;
-    public GameObject kaboom;
+     float epsilon = 5;
+    float rotationSpeed;
+    float limitRotDegree;
+     GameObject kaboom;
     public string state = "standBy";
-    public bool shoot = false;
-    public bool ok = false;
+     bool shoot = false;
+     public bool ok = false;
     string rotate = "false";
     Animator anim;
     public GameObject rotateTowards;
     public float rotationSmooth;
-    public bool rotateNow = false;
+    
+     bool rotateNow = false;
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
         kaboom = cannon.transform.Find ("kaboom").gameObject;
         anim = kaboom.GetComponent<Animator> ();
         vfx = transform.Find ("Light").gameObject;
-        rotationSpeed=GameManager.Instance.can_RotationSpeed;
-        limitRotDegree=GameManager.Instance.can_RotationDegree;
+        rotationSpeed = GameManager.Instance.can_RotationSpeed;
+        limitRotDegree = GameManager.Instance.can_RotationDegree;
     }
 
     // Update is called once per frame
@@ -51,7 +50,6 @@ public class CannonController : MonoBehaviour {
                             if ((touch.position.x > beginTouchPos.x)) {
                                 if (transform.eulerAngles.y < limitRotDegree || transform.eulerAngles.y >= (360 - limitRotDegree - 1)) {
                                     transform.Rotate (0, 1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = transform.eulerAngles.y.ToString ();
                                     beginTouchPos = touch.position;
                                 }
                             }
@@ -59,7 +57,6 @@ public class CannonController : MonoBehaviour {
                             if ((touch.position.x < beginTouchPos.x)) {
                                 if (transform.eulerAngles.y > (360 - limitRotDegree) || transform.eulerAngles.y <= limitRotDegree + 1) {
                                     transform.Rotate (0, -1 * rotationSpeed * Time.deltaTime, 0);
-                                    pos.text = transform.eulerAngles.y.ToString ();
                                     beginTouchPos = touch.position;
                                 }
                             }
@@ -79,8 +76,9 @@ public class CannonController : MonoBehaviour {
                         shoot = false;
                     }
                 } else {
+                    CharacterController.Instance.StopForce(false);
                     GameManager.Instance.launchCharacter ();
-                    UIManager.Instance.decStamina = true;       
+                    UIManager.Instance.decStamina = true;
                     GameManager.Instance.StartFollowPath (index);
                     state = "launched";
                 }
@@ -112,7 +110,7 @@ public class CannonController : MonoBehaviour {
     }
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
-            CharacterController.Instance.reset();
+            CharacterController.Instance.reset ();
             bool launch = GameManager.Instance.GetPlayerState ();
             if (!launch) {
                 if (state == "standBy") {
@@ -120,8 +118,7 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.SetDirection ();
                 }
             } else {
-                            Debug.Log("*********");
-                GameManager.Instance.StopFlying ();  
+                GameManager.Instance.StopFlying ();
                 state = "adjustRotation";
                 GameManager.Instance.uninit ();
                 GameManager.Instance.SetCurrentCanon (this.gameObject);
@@ -130,8 +127,8 @@ public class CannonController : MonoBehaviour {
                     GameManager.Instance.RotateEnv ();
                 }
             }
-            if(GameManager.Instance.staminaValue<100){
-            UIManager.Instance.refullStamina=true;
+            if (GameManager.Instance.staminaValue < 100) {
+                UIManager.Instance.refullStamina = true;
             }
         }
     }

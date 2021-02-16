@@ -1216,8 +1216,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178611877}
-  m_LocalRotation: {x: -0.46979457, y: 0.52931905, z: -0.52016044, w: -0.47806656}
-  m_LocalPosition: {x: 0.13338687, y: 11.595442, z: 9.095649}
+  m_LocalRotation: {x: -0.5201577, y: -0.4780697, z: 0.46979767, w: -0.5293162}
+  m_LocalPosition: {x: -0.17338648, y: 11.595441, z: 9.064354}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470449861}
@@ -1480,6 +1480,7 @@ GameObject:
   - component: {fileID: 225148395}
   - component: {fileID: 225148397}
   - component: {fileID: 225148396}
+  - component: {fileID: 225148398}
   m_Layer: 0
   m_Name: endPath (1)
   m_TagString: Untagged
@@ -1528,6 +1529,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &225148398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225148394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2c574928ed5b444807b2336e2152c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &226594795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4519,17 +4532,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  vfx: {fileID: 0}
-  dist: {fileID: 0}
-  pos: {fileID: 0}
-  epsilon: 5
-  kaboom: {fileID: 0}
   state: standBy
-  shoot: 0
   ok: 0
   rotateTowards: {fileID: 0}
   rotationSmooth: 0
-  rotateNow: 0
 --- !u!65 &576065099
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4911,7 +4917,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endpoint: {fileID: 1147640999}
   endPath: {fileID: 1858499388}
-  canMove: 0
   fallTimer: 0
   path_followers: []
   launch: 0
@@ -7762,7 +7767,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893103531}
-  m_LocalRotation: {x: 0.4993431, y: -0.000000037427068, z: 0.000000021570692, w: 0.86640435}
+  m_LocalRotation: {x: 0.49934313, y: 0.000000025820864, z: -0.000000014881594, w: 0.86640435}
   m_LocalPosition: {x: -0.02, y: 17.16, z: -0.9200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -9645,7 +9650,6 @@ GameObject:
   - component: {fileID: 1142372640}
   - component: {fileID: 1142372642}
   - component: {fileID: 1142372641}
-  - component: {fileID: 1142372643}
   m_Layer: 0
   m_Name: collider
   m_TagString: Player
@@ -9697,18 +9701,6 @@ CapsuleCollider:
   m_Height: 3.86
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1142372643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1142372639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a48ad49870d32b4d881d6cd4a84ecf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1147640999
 GameObject:
   m_ObjectHideFlags: 0
@@ -10498,7 +10490,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 6, y: 6, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1281513003 stripped
 GameObject:
@@ -12698,17 +12690,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 3
-  vfx: {fileID: 0}
-  dist: {fileID: 0}
-  pos: {fileID: 0}
-  epsilon: 5
-  kaboom: {fileID: 0}
   state: standBy
-  shoot: 0
   ok: 0
   rotateTowards: {fileID: 858869987}
   rotationSmooth: 2
-  rotateNow: 0
 --- !u!114 &1526090042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12734,8 +12719,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.9053197, y: 1.8946238, z: 0.96426415}
-  m_Center: {x: 1.2714684, y: 2.287166, z: 0.8973881}
+  m_Size: {x: 5.9053197, y: 1.8946238, z: 0.69974625}
+  m_Center: {x: 1.2714686, y: 2.287166, z: 0.76512915}
 --- !u!4 &1526090044
 Transform:
   m_ObjectHideFlags: 0
@@ -17214,17 +17199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 3
-  vfx: {fileID: 0}
-  dist: {fileID: 0}
-  pos: {fileID: 0}
-  epsilon: 5
-  kaboom: {fileID: 0}
   state: standBy
-  shoot: 0
   ok: 0
   rotateTowards: {fileID: 858869987}
   rotationSmooth: 2
-  rotateNow: 0
 --- !u!114 &2115358209
 MonoBehaviour:
   m_ObjectHideFlags: 0

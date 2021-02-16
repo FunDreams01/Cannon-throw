@@ -7,8 +7,9 @@ namespace PathCreation.Examples { }
 public class CharacterController : MonoBehaviour {
     public GameObject endpoint;
     public GameObject endPath;
-    public bool canMove = false;
+    bool canMove = false;
     float translateSpeed;
+    bool stopForce=false;
     float translateLimit;
     public float fallTimer;
     float rotationSpeed;
@@ -76,6 +77,7 @@ public class CharacterController : MonoBehaviour {
     }
     // Start is called before the first frame update
     void Start () {
+        stopForce=false;
         body = this.transform.Find ("body").gameObject;
         myCharacter = body.transform.Find ("myCharacter").gameObject;
         myCollider = body.transform.Find ("collider").gameObject;
@@ -127,8 +129,9 @@ public class CharacterController : MonoBehaviour {
             myCharacter.transform.Rotate (0, 0, -rotation);
         }
         if (launch) {
+            if(!stopForce){
+            transform.Translate (0, 0, 1 * speed * Time.deltaTime);}
 
-            transform.Translate (0, 0, 1 * speed * Time.deltaTime);
 
             if (backToTrack) {
                 if (trackpoint != null) {
@@ -387,6 +390,10 @@ public class CharacterController : MonoBehaviour {
     public void reset () {
         myCharacter.transform.localPosition = new Vector3 (0, 0, 0);
         myCharacter.transform.localRotation = Quaternion.identity;
+    }
+
+    public void StopForce(bool x){
+        stopForce=x;
     }
 
 }
