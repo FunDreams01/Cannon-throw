@@ -42,7 +42,7 @@ public class CharacterController : MonoBehaviour {
     public bool boom = false;
     Vector2 beginTouchPos;
     bool touchDidMove;
-    bool rotate_init=false;
+    bool rotate_init = false;
     public bool fall = false;
     bool isswimming = false;
     GameObject myCharacter;
@@ -107,7 +107,7 @@ public class CharacterController : MonoBehaviour {
         dashSpeed = GameManager.Instance.dashSpeed;
         resetRotation_timer = GameManager.Instance.resetRotation_timer;
         timer = resetRotation_timer;
-        rotationInitSpeed=GameManager.Instance.rotationInitSpeed;
+        rotationInitSpeed = GameManager.Instance.rotationInitSpeed;
     }
 
     // Update is called once per frame
@@ -161,6 +161,9 @@ public class CharacterController : MonoBehaviour {
                             //swipe right
                             if (moveRight) {
                                 if ((touch.position.x > beginTouchPos.x)) {
+                                    resetRot = false;
+                                    timer = resetRotation_timer;
+                                    rotate_init = false;
                                     if (transform.position.x >= 0) {
                                         if (transform.position.x < translateLimit) {
                                             //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
@@ -180,6 +183,9 @@ public class CharacterController : MonoBehaviour {
                             //swipe left
                             if (moveLeft) {
                                 if ((touch.position.x < beginTouchPos.x)) {
+                                    resetRot = false;
+                                    timer = resetRotation_timer;
+                                    rotate_init = false;
                                     if (transform.position.x >= 0) {
                                         //  transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                                         transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
@@ -197,6 +203,9 @@ public class CharacterController : MonoBehaviour {
                             }
 
                             break;
+                        case TouchPhase.Ended:
+                         resetRot = true;
+                         break;
                     }
                 }
 
@@ -204,7 +213,7 @@ public class CharacterController : MonoBehaviour {
                     if (Input.GetKey (KeyCode.RightArrow)) {
                         resetRot = false;
                         timer = resetRotation_timer;
-                        rotate_init=false;
+                        rotate_init = false;
                         if (transform.position.x >= 0) {
                             if (transform.position.x < translateLimit) {
                                 //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
@@ -227,16 +236,16 @@ public class CharacterController : MonoBehaviour {
                     if (timer > 0) {
                         timer = timer - Time.deltaTime;
                     } else {
-                       rotate_init=true;
-                        resetRot=false;
-                        timer=resetRotation_timer;
+                        rotate_init = true;
+                        resetRot = false;
+                        timer = resetRotation_timer;
                     }
                 }
 
-                if(rotate_init){
-                    transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.identity,Time.deltaTime*rotationInitSpeed);
-                    if(transform.rotation==Quaternion.identity){
-                        rotate_init=false;
+                if (rotate_init) {
+                    transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.identity, Time.deltaTime * rotationInitSpeed);
+                    if (transform.rotation == Quaternion.identity) {
+                        rotate_init = false;
                     }
                 }
 
@@ -244,7 +253,7 @@ public class CharacterController : MonoBehaviour {
                     if (Input.GetKey (KeyCode.LeftArrow)) {
                         resetRot = false;
                         timer = resetRotation_timer;
-                        rotate_init=false;
+                        rotate_init = false;
                         if (transform.position.x >= 0) {
                             //  transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                             transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
@@ -261,7 +270,7 @@ public class CharacterController : MonoBehaviour {
                         }
                     }
                     if (Input.GetKeyUp (KeyCode.LeftArrow)) {
-                        resetRot=true;
+                        resetRot = true;
                     }
                 }
             }
