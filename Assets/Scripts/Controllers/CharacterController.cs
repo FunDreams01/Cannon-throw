@@ -111,7 +111,7 @@ public class CharacterController : MonoBehaviour {
         }
         if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Idle") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Flying") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Swimming")) {
             if(reset_character){
-            reset ();
+           // reset ();
             }
         }
 

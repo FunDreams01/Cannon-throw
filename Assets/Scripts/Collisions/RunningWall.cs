@@ -32,6 +32,7 @@ namespace PathCreation.Examples {
                 }
                 //GameManager.Instance.StopWalk ();
                 GameManager.Instance.Fly ();
+                CharacterController.Instance.reset();
                 UIManager.Instance.decStamina=true;
                 //GetComponent<Collider> ().enabled = false;
                 //CharacterController.Instance.SetBackTOtrack(true,go);
