@@ -7,13 +7,18 @@ namespace PathCreation.Examples { }
 public class CharacterController : MonoBehaviour {
     public GameObject endpoint;
     public GameObject endPath;
+    float rotationInitSpeed;
     bool canMove = false;
+    float resetRotation_timer;
+    public float timer;
+    public bool resetRot = false;
     float translateSpeed;
-    bool stopForce=false;
+    bool stopForce = false;
     float translateLimit;
     public float fallTimer;
     float rotationSpeed;
     float limitRotDegree;
+    public bool reachedEndline = false;
     Vector3 initPos;
     GameObject point;
     public PathFollower[] path_followers;
@@ -37,11 +42,12 @@ public class CharacterController : MonoBehaviour {
     public bool boom = false;
     Vector2 beginTouchPos;
     bool touchDidMove;
+    bool rotate_init=false;
     public bool fall = false;
     bool isswimming = false;
     GameObject myCharacter;
     GameObject body;
-    bool reset_character=true;
+    bool reset_character = true;
     float speed;
     GameObject myPoint;
     bool moveTowardsPoint = false;
@@ -49,7 +55,7 @@ public class CharacterController : MonoBehaviour {
     bool startAlign = false;
     public bool moveRight = false;
     public bool moveLeft = false;
-   public float rotationleft = 360;
+    public float rotationleft = 360;
     float dashSpeed;
     public bool spin = false;
     private static CharacterController _instance;
@@ -77,7 +83,7 @@ public class CharacterController : MonoBehaviour {
     }
     // Start is called before the first frame update
     void Start () {
-        stopForce=false;
+        stopForce = false;
         body = this.transform.Find ("body").gameObject;
         myCharacter = body.transform.Find ("myCharacter").gameObject;
         myCollider = body.transform.Find ("collider").gameObject;
@@ -88,8 +94,8 @@ public class CharacterController : MonoBehaviour {
         WLColFix = new ColliderFix ("Idle", new Vector3 (0, 0, 0), new Vector3 (-90, 0, 0));
         WRColFix = new ColliderFix ("Idle", new Vector3 (0, 0, 0), new Vector3 (-90, 0, 0));
         SwimColFix = new ColliderFix ("Idle", new Vector3 (0, 1.3f, -1.18f), new Vector3 (0, 0, 0));
-        modelFixWL=new Vector3(-0.22f, -1.71f, 0    );
-        modelFixWR=new Vector3(0.22f, -1, 0);
+        modelFixWL = new Vector3 (-0.22f, -1.71f, 0);
+        modelFixWR = new Vector3 (0.22f, -1, 0);
         Idle ();
         initPos = transform.position;
         translateSpeed = GameManager.Instance.ch_TranslateSped;
@@ -98,7 +104,10 @@ public class CharacterController : MonoBehaviour {
         rotationSpeed = GameManager.Instance.ch_RotationSpeed;
         wallWalkingSpeed = GameManager.Instance.wallSpeed;
         fallTimer = GameManager.Instance.fallTimer;
-        dashSpeed=GameManager.Instance.dashSpeed;
+        dashSpeed = GameManager.Instance.dashSpeed;
+        resetRotation_timer = GameManager.Instance.resetRotation_timer;
+        timer = resetRotation_timer;
+        rotationInitSpeed=GameManager.Instance.rotationInitSpeed;
     }
 
     // Update is called once per frame
@@ -109,11 +118,6 @@ public class CharacterController : MonoBehaviour {
         if (isWallWalking) {
             StartWallWalking ();
         }
-        if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Idle") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Flying") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Swimming")) {
-            if(reset_character){
-           // reset ();
-            }
-        }
 
         if (spin) {
             float rotation = dashSpeed * Time.deltaTime;
@@ -122,16 +126,16 @@ public class CharacterController : MonoBehaviour {
             } else {
                 rotation = rotationleft;
                 rotationleft = 0;
-                spin=false;
-                rotationleft=360;
-                reset_character=true;
+                spin = false;
+                rotationleft = 360;
+                reset_character = true;
             }
             myCharacter.transform.Rotate (0, 0, -rotation);
         }
         if (launch) {
-            if(!stopForce){
-            transform.Translate (0, 0, 1 * speed * Time.deltaTime);}
-
+            if (!stopForce) {
+                transform.Translate (0, 0, 1 * speed * Time.deltaTime);
+            }
 
             if (backToTrack) {
                 if (trackpoint != null) {
@@ -198,6 +202,9 @@ public class CharacterController : MonoBehaviour {
 
                 if (moveRight) {
                     if (Input.GetKey (KeyCode.RightArrow)) {
+                        resetRot = false;
+                        timer = resetRotation_timer;
+                        rotate_init=false;
                         if (transform.position.x >= 0) {
                             if (transform.position.x < translateLimit) {
                                 //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
@@ -211,10 +218,33 @@ public class CharacterController : MonoBehaviour {
                             transform.Rotate (0, 0, 1 * rotationSpeed * Time.deltaTime);
                         }
                     }
+
+                    if (Input.GetKeyUp (KeyCode.RightArrow)) {
+                        resetRot = true;
+                    }
+                }
+                if (resetRot) {
+                    if (timer > 0) {
+                        timer = timer - Time.deltaTime;
+                    } else {
+                       rotate_init=true;
+                        resetRot=false;
+                        timer=resetRotation_timer;
+                    }
+                }
+
+                if(rotate_init){
+                    transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.identity,Time.deltaTime*rotationInitSpeed);
+                    if(transform.rotation==Quaternion.identity){
+                        rotate_init=false;
+                    }
                 }
 
                 if (moveLeft) {
                     if (Input.GetKey (KeyCode.LeftArrow)) {
+                        resetRot = false;
+                        timer = resetRotation_timer;
+                        rotate_init=false;
                         if (transform.position.x >= 0) {
                             //  transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
                             transform.position = transform.position + Vector3.left * Time.deltaTime * translateSpeed;
@@ -229,6 +259,9 @@ public class CharacterController : MonoBehaviour {
                         if (transform.eulerAngles.z > (360 - limitRotDegree) || transform.eulerAngles.z <= limitRotDegree + 10) {
                             transform.Rotate (0, 0, -1 * rotationSpeed * Time.deltaTime);
                         }
+                    }
+                    if (Input.GetKeyUp (KeyCode.LeftArrow)) {
+                        resetRot=true;
                     }
                 }
             }
@@ -304,7 +337,7 @@ public class CharacterController : MonoBehaviour {
         anim.SetInteger ("animParam", 0);
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
         myCollider.transform.eulerAngles = IdleColFix.rotation;
-        myCharacter.transform.localPosition=Vector3.zero; 
+        myCharacter.transform.localPosition = Vector3.zero;
 
     }
 
@@ -318,29 +351,29 @@ public class CharacterController : MonoBehaviour {
     public void Fly () {
         anim.SetInteger ("animParam", 1);
         myCollider.transform.position = transform.TransformPoint (FlyColFix.position);
-        myCollider.transform.localEulerAngles = FlyColFix.rotation;   
-        myCharacter.transform.localPosition=Vector3.zero; 
-        }
+        myCollider.transform.localEulerAngles = FlyColFix.rotation;
+        myCharacter.transform.localPosition = Vector3.zero;
+    }
 
     public void WalkLeft () {
         anim.SetInteger ("animParam", 2);
         myCollider.transform.position = transform.TransformPoint (WLColFix.position);
         myCollider.transform.localEulerAngles = WLColFix.rotation;
-        myCharacter.transform.localPosition=modelFixWL;
+        myCharacter.transform.localPosition = modelFixWL;
     }
 
     public void WalkRight () {
         anim.SetInteger ("animParam", 3);
         myCollider.transform.position = transform.TransformPoint (WRColFix.position);
         myCollider.transform.localEulerAngles = WRColFix.rotation;
-        myCharacter.transform.localPosition=modelFixWR;
+        myCharacter.transform.localPosition = modelFixWR;
     }
 
     public void Swim () {
         anim.SetInteger ("animParam", 4);
         myCollider.transform.position = transform.TransformPoint (SwimColFix.position);
         myCollider.transform.localEulerAngles = SwimColFix.rotation;
-        myCharacter.transform.localPosition=Vector3.zero; 
+        myCharacter.transform.localPosition = Vector3.zero;
         isswimming = true;
         CinemachineSwitcher.Instance.playAnim ("side");
     }
@@ -349,9 +382,9 @@ public class CharacterController : MonoBehaviour {
         launch = true;
         boom = true;
         if (GameManager.Instance.GetSelectedForce () == "perfect") {
-            reset_character=false;
-            spin=true;
-        } 
+            reset_character = false;
+            spin = true;
+        }
         Fly ();
     }
 
@@ -392,8 +425,8 @@ public class CharacterController : MonoBehaviour {
         myCharacter.transform.localRotation = Quaternion.identity;
     }
 
-    public void StopForce(bool x){
-        stopForce=x;
+    public void StopForce (bool x) {
+        stopForce = x;
     }
 
 }

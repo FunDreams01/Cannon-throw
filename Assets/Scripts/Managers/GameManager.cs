@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour {
     public float ch_RotationLimit;
     public float ch_RotationSpeed;
     public float fallTimer;
+    public float resetRotation_timer;
+    public float rotationInitSpeed;
 
     private static GameManager _instance;
     public static GameManager Instance {
