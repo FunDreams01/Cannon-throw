@@ -347,7 +347,6 @@ public class CharacterController : MonoBehaviour {
         myCollider.transform.position = transform.TransformPoint (IdleColFix.position);
         myCollider.transform.eulerAngles = IdleColFix.rotation;
         myCharacter.transform.localPosition = Vector3.zero;
-
     }
 
     public void Fall () {
