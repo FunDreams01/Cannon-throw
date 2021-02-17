@@ -1222,8 +1222,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178611877}
-  m_LocalRotation: {x: -0.44507006, y: 0.53367305, z: -0.39549232, w: -0.6005761}
-  m_LocalPosition: {x: 3.017036, y: 11.244906, z: 8.72}
+  m_LocalRotation: {x: 0.39415488, y: 0.6021745, z: -0.44625494, w: 0.53186876}
+  m_LocalPosition: {x: -3.054837, y: 11.244906, z: 9.458088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470449861}
@@ -7779,7 +7779,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893103531}
-  m_LocalRotation: {x: 0.4993431, y: -0.000000037427068, z: 0.00000002157069, w: 0.86640435}
+  m_LocalRotation: {x: 0.4993431, y: 9.09823e-15, z: -1.4517387e-14, w: 0.86640435}
   m_LocalPosition: {x: -0.02, y: 17.16, z: -0.9200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -19577,7 +19577,7 @@ MonoBehaviour:
   can_RotationSpeed: 40
   ch_TranslateSped: 30
   ch_TranslateLimit: 40
-  dashSpeed: 850
+  dashSpeed: 900
   ch_RotationLimit: 80
   ch_RotationSpeed: 400
   fallTimer: 5
