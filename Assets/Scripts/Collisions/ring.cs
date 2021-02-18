@@ -8,7 +8,8 @@ public class ring : MonoBehaviour
     {
         if(other.gameObject.tag=="Player"){
           transform.Find("RiseRing").GetComponent<ParticleSystem>().Play();
-          CharacterController.Instance.spin=true;
+          CharacterController.Instance.nbr_spins=CharacterController.Instance.nbr_spins+1;
+          
         }
     }
 }

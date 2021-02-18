@@ -10,10 +10,11 @@ public class endline : MonoBehaviour
     {
         if(other.gameObject.tag=="Player"){
             UIManager.Instance.decStamina = false;       
-            GameManager.Instance.AlignEnd();
-           GameManager.Instance.StartFollowPath(path);
            UIManager.Instance.EndState();
             GameManager.Instance.StopMove();
+            CharacterController.Instance.Jump();
+            UIManager.Instance.closeGamePanel();
+             CinemachineSwitcher.Instance.playAnim ("side");
         }
     }
 }
