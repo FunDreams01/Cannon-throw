@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    public Image [] red_x;
     public Image staminaBar;
    public  bool refullStamina=false;
    public bool decStamina=false;
@@ -12,6 +13,8 @@ public class UIManager : MonoBehaviour {
      Animator anim;
     public GameObject c1;
     public GameObject c2;
+
+
     [SerializeField]
     Text scoreText;
     [SerializeField]
@@ -156,6 +159,10 @@ public class UIManager : MonoBehaviour {
     IEnumerator wait () {
         yield return new WaitForSeconds (timeSlide);
         slidePanel.SetActive (false);
+    }
+
+    public void damage(int i){
+        red_x[i].gameObject.SetActive(true);
     }
 
 }

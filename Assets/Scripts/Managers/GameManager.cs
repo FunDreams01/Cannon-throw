@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
     public float can_RotationDegree;
     public float can_RotationSpeed;
 
+    public float can_Rot_NewPath;
+
     [Header ("Character settings")]
     public float ch_TranslateSped;
     public float ch_TranslateLimit;

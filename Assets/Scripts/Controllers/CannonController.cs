@@ -19,7 +19,7 @@ public class CannonController : MonoBehaviour {
     string rotate = "false";
     Animator anim;
     public GameObject rotateTowards;
-    public float rotationSmooth;
+     float rotationSmooth;
     
      bool rotateNow = false;
     // Start is called before the first frame update
@@ -30,6 +30,7 @@ public class CannonController : MonoBehaviour {
         vfx = transform.Find ("Light").gameObject;
         rotationSpeed = GameManager.Instance.can_RotationSpeed;
         limitRotDegree = GameManager.Instance.can_RotationDegree;
+        rotationSmooth=GameManager.Instance.can_Rot_NewPath;
     }
 
     // Update is called once per frame
@@ -81,6 +82,7 @@ public class CannonController : MonoBehaviour {
                     UIManager.Instance.decStamina = true;
                     GameManager.Instance.StartFollowPath (index);
                     state = "launched";
+                    reset_blendshape();
                 }
             }
         } else {
@@ -103,6 +105,10 @@ public class CannonController : MonoBehaviour {
 
     public void setState (string s) {
         state = s;
+    }
+
+    public void reset_blendshape(){
+         anim.SetBool ("ok", false);
     }
 
     public void ShootCannon () {

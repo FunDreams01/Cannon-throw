@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour {
     public bool rotateNow=false;
-    public float rotationSmooth;
+     float rotationSmooth;
     public GameObject rotateTowards;
     private static EnvironmentController _instance;
     public static EnvironmentController Instance {
@@ -31,7 +31,7 @@ public class EnvironmentController : MonoBehaviour {
     }
     // Start is called before the first frame update
     void Start () {
-
+        rotationSmooth=GameManager.Instance.can_Rot_NewPath;
     }
 
     // Update is called once per frame
