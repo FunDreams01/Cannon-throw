@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour {
 
     private void Update () {
         if (state == "half1") {
-            if (Vector3.Distance (player.transform.position, c1.transform.position) > 0) {
+            if (Vector3.Distance (player.transform.position, c1.transform.position) > 2) {
                 d = 1 - (Vector3.Distance (player.transform.position, c1.transform.position) / maxdist);
                 progress.fillAmount = d / 2;
             } else {
@@ -162,7 +162,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void damage(int i){
-        red_x[i].gameObject.SetActive(true);
+        red_x[i-1].gameObject.SetActive(true);
     }
 
 }

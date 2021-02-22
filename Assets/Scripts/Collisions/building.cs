@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class building : MonoBehaviour
-{ Rigidbody m_Rigidbody;
+public class building : MonoBehaviour {
+    Rigidbody m_Rigidbody;
 
- private void Start()
-{
-   m_Rigidbody = GetComponent<Rigidbody>();
-   m_Rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous; 
-}
-    private void OnCollisionEnter(Collision other)
-{
-    if(other.gameObject.tag=="Player"){
-        DamageManager.Instance.hitObstacle();
-        CharacterController.Instance.StopForce(true);
+    private void Start () {
+        m_Rigidbody = GetComponent<Rigidbody> ();
+        m_Rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
-}
+    private void OnCollisionEnter (Collision other) {
+        if (other.gameObject.tag == "Player") {
+            DamageManager.Instance.hitObstacle ();
+            CharacterController.Instance.StopForce (true);
 
-    private void OnCollisionExit(Collision other)
-{
-    if(other.gameObject.tag=="Player")
-        CharacterController.Instance.StopForce(false);
-}
+        }
+    }
+
+    private void OnCollisionExit (Collision other) {
+        if (other.gameObject.tag == "Player") {
+            CharacterController.Instance.StopForce (false);
+        }
+    }
 }

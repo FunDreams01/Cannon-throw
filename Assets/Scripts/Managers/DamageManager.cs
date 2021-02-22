@@ -35,6 +35,7 @@ public class DamageManager : MonoBehaviour {
             damage_count++;
             UIManager.Instance.damage (damage_count);
         } else {
+            CharacterController.Instance.stopForce=false;
             GameManager.Instance.Fall ();
             UIManager.Instance.closeGamePanel ();
             UIManager.Instance.Lost ();          

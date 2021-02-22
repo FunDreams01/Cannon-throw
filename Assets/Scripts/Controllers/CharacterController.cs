@@ -8,12 +8,13 @@
         public GameObject endpoint;
         public GameObject endPath;
         float rotationInitSpeed;
+        public string sideCollision = "";
         bool canMove = false;
         float resetRotation_timer;
         public float timer;
         public bool resetRot = false;
         float translateSpeed;
-        bool stopForce = false;
+        public bool stopForce = false;
         float translateLimit;
         public float fallTimer;
         float rotationSpeed;
@@ -21,6 +22,7 @@
         public bool reachedEndline = false;
         Vector3 initPos;
         GameObject point;
+        Rigidbody rb;
         public PathFollower[] path_followers;
         public static bool inCanon = true;
         float fallHeight;
@@ -85,6 +87,7 @@
         }
         // Start is called before the first frame update
         void Start () {
+            rb = GetComponent<Rigidbody> ();
             stopForce = false;
             body = this.transform.Find ("body").gameObject;
             myCharacter = body.transform.Find ("myCharacter").gameObject;
@@ -113,7 +116,7 @@
         }
 
         // Update is called once per frame
-        void Update () {
+        void FixedUpdate () {
             if (inCanon) {
                 resetCanon ();
             }
@@ -146,15 +149,6 @@
                     transform.Translate (0, 0, 1 * speed * Time.deltaTime);
                 }
 
-                if (backToTrack) {
-                    if (trackpoint != null) {
-                        if (transform.position.x > trackpoint.transform.position.x) {
-                            transform.Translate (-1 * Time.deltaTime * translateSpeed, 0, 0);
-                        } else if (transform.position.x <= trackpoint.transform.position.x) {
-                            transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
-                        }
-                    }
-                }
                 if (canMove) {
 
                     if ((Input.touchCount > 0)) {
@@ -177,6 +171,7 @@
                                             if (transform.position.x < translateLimit) {
                                                 //   transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
                                                 transform.position = transform.position + Vector3.right * Time.deltaTime * translateSpeed;
+
                                             }
                                         } else {
                                             //transform.Translate (1 * Time.deltaTime * translateSpeed, 0, 0);
@@ -451,6 +446,10 @@
 
         public void Jump () {
             this.gameObject.GetComponent<Jump2TargetFinal> ().enabled = true;
+        }
+
+        public void freeze () {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
         }
 
     }

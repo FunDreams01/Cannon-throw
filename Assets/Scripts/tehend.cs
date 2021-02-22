@@ -8,6 +8,8 @@ public class tehend : MonoBehaviour
     {
         if(other.gameObject.tag=="Player"){
             CharacterController.Instance.StopFlying();
+            CharacterController.Instance.stopForce=true;
+            CharacterController.Instance.freeze();
             UIManager.Instance.Won();
         }
     }
