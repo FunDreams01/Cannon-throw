@@ -20,6 +20,7 @@ TagManager:
   - cannon
   - FirstCannon
   - cannon_stop
+  - last_point
   layers:
   - Default
   - TransparentFX

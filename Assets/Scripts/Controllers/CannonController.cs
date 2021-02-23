@@ -4,24 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CannonController : MonoBehaviour {
+    public GameObject myPath;
     public int index;
- GameObject vfx;
+    GameObject vfx;
     GameObject cannon;
     Vector2 beginTouchPos;
     bool touchDidMove = false;
-     float epsilon = 5;
+    float epsilon = 5;
     float rotationSpeed;
     float limitRotDegree;
-     GameObject kaboom;
+    GameObject kaboom;
     public string state = "standBy";
-     bool shoot = false;
-     public bool ok = false;
+    bool shoot = false;
+    public bool ok = false;
     string rotate = "false";
     Animator anim;
     public GameObject rotateTowards;
-     float rotationSmooth;
-    
-     bool rotateNow = false;
+    float rotationSmooth;
+
+    bool rotateNow = false;
     // Start is called before the first frame update
     void Start () {
         cannon = transform.Find ("Cannon").gameObject;
@@ -30,7 +31,7 @@ public class CannonController : MonoBehaviour {
         vfx = transform.Find ("Light").gameObject;
         rotationSpeed = GameManager.Instance.can_RotationSpeed;
         limitRotDegree = GameManager.Instance.can_RotationDegree;
-        rotationSmooth=GameManager.Instance.can_Rot_NewPath;
+        rotationSmooth = GameManager.Instance.can_Rot_NewPath;
     }
 
     // Update is called once per frame
@@ -77,12 +78,13 @@ public class CannonController : MonoBehaviour {
                         shoot = false;
                     }
                 } else {
-                    CharacterController.Instance.StopForce(false);
+                    CharacterController.Instance.StopForce (false);
                     GameManager.Instance.launchCharacter ();
                     UIManager.Instance.decStamina = true;
-                    GameManager.Instance.StartFollowPath (index);
+                    // GameManager.Instance.StartFollowPath (index);
+                    CharacterController.Instance.follow = true;
                     state = "launched";
-                    reset_blendshape();
+                    reset_blendshape ();
                 }
             }
         } else {
@@ -107,8 +109,8 @@ public class CannonController : MonoBehaviour {
         state = s;
     }
 
-    public void reset_blendshape(){
-         anim.SetBool ("ok", false);
+    public void reset_blendshape () {
+        anim.SetBool ("ok", false);
     }
 
     public void ShootCannon () {
@@ -117,6 +119,9 @@ public class CannonController : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
             CharacterController.Instance.reset ();
+            if (myPath != null) {
+                myPath.SetActive (true);
+            }
             bool launch = GameManager.Instance.GetPlayerState ();
             if (!launch) {
                 if (state == "standBy") {

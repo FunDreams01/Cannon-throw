@@ -59,6 +59,8 @@
         public bool moveLeft = false;
         public float rotationleft = 360;
         float dashSpeed;
+        public bool follow = false;
+        public GameObject pathTarget;
         public int nbr_spins = 0;
         public bool spin = false;
 
@@ -146,11 +148,24 @@
 
             if (launch) {
                 if (!stopForce) {
-                    transform.Translate (0, 0, 1 * speed * Time.deltaTime);
+                    if (follow) {
+                        if (pathTarget != null) {
+                            //rotate rowatrds target
+                            // Smoothly rotates towards target 
+                            var targetPoint = pathTarget.transform.position;
+                            var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
+                            transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, Time.deltaTime*20);
+                            var dir = transform.position - pathTarget.transform.position;
+                            dir = dir.normalized;
+                        transform.Translate (0, 0, 1 * speed * Time.deltaTime);
+                        }
+                    } else {
+                        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.identity, Time.deltaTime * 20);
+                        transform.Translate (0, 0, 1 * speed * Time.deltaTime);
+                    }
                 }
 
                 if (canMove) {
-
                     if ((Input.touchCount > 0)) {
                         Touch touch = Input.GetTouch (0);
                         switch (touch.phase) {
@@ -412,9 +427,12 @@
         }
 
         public void SetDirection () {
-            GameObject dir = GameManager.Instance.GetCurrentCanon ().gameObject.transform.Find ("direction").gameObject;
-            transform.position = dir.transform.position;
-            transform.rotation = dir.transform.rotation;
+            if (GameManager.Instance.GetCurrentCanon ().gameObject.transform.Find ("direction").gameObject != null) {
+                GameObject dir = GameManager.Instance.GetCurrentCanon ().gameObject.transform.Find ("direction").gameObject;
+                transform.position = dir.transform.position;
+                transform.rotation = dir.transform.rotation;
+            }
+
         }
 
         public void StartMove () {
@@ -451,5 +469,4 @@
         public void freeze () {
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
-
     }
