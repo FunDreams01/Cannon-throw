@@ -12,8 +12,6 @@ public class building : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
             DamageManager.Instance.hitObstacle ();
-            CharacterController.Instance.StopForce (true);
-
         }
     }
 

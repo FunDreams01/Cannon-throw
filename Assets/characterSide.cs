@@ -12,6 +12,14 @@ public class characterSide : MonoBehaviour {
             } else if (CharacterController.Instance.sideCollision == "left") {
                 CharacterController.Instance.moveLeft = false;
             }
+
+            if (side == "front") {
+                Debug.Log("--------");
+                CharacterController.Instance.StopForce (true);
+                GameManager.Instance.Fall ();
+                UIManager.Instance.closeGamePanel ();
+                UIManager.Instance.Lost ();
+            }
         }
     }
 
