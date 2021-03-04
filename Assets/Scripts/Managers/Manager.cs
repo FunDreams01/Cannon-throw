@@ -12,7 +12,6 @@ public class Manager : MonoBehaviour
        UIManager uiManager = UIManager.Instance; 
        ScoreManager scoreManager = ScoreManager.Instance; 
        DamageManager damageManager = DamageManager.Instance; 
-
     }
 
 }

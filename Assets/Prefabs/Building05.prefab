@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 1948686875163109242}
   - component: {fileID: 3216973068544977119}
   - component: {fileID: 810661950635629589}
-  - component: {fileID: 3982643733616559436}
   m_Layer: 0
   m_Name: Building05
-  m_TagString: Untagged
+  m_TagString: building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171200679094549952}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.9, y: 23.4, z: 100.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -80,16 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &3982643733616559436
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171200679094549952}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 13.046682, y: 45.666885, z: 45.961266}
-  m_Center: {x: 0.0000011920929, y: 22.82766, z: 0.000002861023}

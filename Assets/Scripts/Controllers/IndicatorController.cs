@@ -48,7 +48,7 @@ public class IndicatorController : MonoBehaviour {
                 }
 
             } else {
-                if (!hitIndicator.GetComponent<ForceSelector> ().forceSlected) {
+                if (!hitIndicator.GetComponent<ForceSelector> ().forceSelected) {
                     if ((Input.touchCount > 0)) {
                         Touch touch = Input.GetTouch (0);
                         switch (touch.phase) {

@@ -7,8 +7,8 @@ public class ForceSelector : MonoBehaviour {
   
     [Header("Arrow Speed")]
     public float animSpeed = 1;
-    public bool forceSlected = false;
-    GameObject myArrow;
+    public bool forceSelected = false;
+     GameObject myArrow;
     Animator arrowAnim;
     GameObject myRaycast;
     RaycastHit hit;
@@ -26,7 +26,7 @@ public class ForceSelector : MonoBehaviour {
 
    public void selectForce () {
        arrowAnim.enabled = false;
-        forceSlected=true;
+        forceSelected=true;
           if (Physics.Raycast(myRaycast.transform.position,Vector3.down, out hit,Mathf.Infinity, layerMask)){
             speed=GameManager.Instance.GetForce(hit.collider.tag);
             GameManager.Instance.SetSpeed(speed);

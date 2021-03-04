@@ -31,6 +31,7 @@ public class DamageManager : MonoBehaviour {
     }
 
     public void hitObstacle () {
+        Debug.Log("If you see this, you failed to remove the building script.");
         if (damage_count<3) {
             damage_count++;
             UIManager.Instance.damage (damage_count);

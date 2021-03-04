@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColliderFix : MonoBehaviour
+public class ColliderFix
 {
     public string animationName;
     public Vector3 position;

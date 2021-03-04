@@ -1,4 +1,4 @@
-﻿    using System.Collections.Generic;
+    using System.Collections.Generic;
     using System.Collections;
     using PathCreation;
     using UnityEngine;
@@ -422,7 +422,6 @@
             path_followers[i].enabled = true;
         }
         public void resetCanon () {
-
             inCanon = false;
         }
 

@@ -42,6 +42,7 @@ public class Jump2TargetFinal : MonoBehaviour {
         projectileOnMotion = true;
 
     }
+    bool t = false;
     //You can also call this is FixedUpdate(), 
     void Update () {
         //If the motion is marked complete, stop checking for anything.
@@ -50,7 +51,12 @@ public class Jump2TargetFinal : MonoBehaviour {
         if (Time.time - initTime >= maxTime) {
             transform.position = TargetTransform.position;
             projectileOnMotion = false;
+            Debug.Log("Done");
+            t = true;
+            Debug.Break();
+            return;
         }
+        if(t) Debug.Log("Still");
         //What is the progress, how much time has passed since the initiation of motion.
         float curTime = (Time.time - initTime);
         //Let's remember x(t) = ½ · a · t² + v₀·t + x₀

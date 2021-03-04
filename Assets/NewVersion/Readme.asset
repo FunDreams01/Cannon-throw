@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf7219bab7fe46a1ad266029b2fee19, type: 3}
+  m_Name: Readme
+  m_EditorClassIdentifier: 
+  icon: {fileID: 2800000, guid: a88648216a3b61a9ba8142af54d474af, type: 3}
+  iconMaxWidth: 192
+  title: Cannon Throw Readme
+  sections:
+  - heading: Blue
+    text: Blue is for States, GameLogic, UI Control
+    linkText: 
+    url: 
+  - heading: Red
+    text: Red is For Cannon and Player Stuff
+    linkText: 
+    url: 
+  - heading: Green
+    text: Level management and paths
+    linkText: 
+    url: 
+  - heading: Diamond
+    text: Designates Manager
+    linkText: 
+    url: 
+  - heading: Circle
+    text: Regular Script Object
+    linkText: 
+    url: 
+  - heading: Bar
+    text: Controller
+    linkText: 
+    url: 
+  - heading: The Script Hierarchy
+    text: 'The above list contains how I color and form coded the scripts. '
+    linkText: 
+    url: 
+  loadedLayout: 0
