@@ -113,12 +113,6 @@ public class CharController : MonoBehaviour
             transform.position = CurPosVec+CurrentSidePos;
         }
 
-
-        
-
-
-
-
     }
 
 
@@ -132,7 +126,7 @@ public class CharController : MonoBehaviour
 
         if(col.gameObject.tag == "ring")
         {
-           // anim.SetTrigger("dashForReal");
+            anim.SetTrigger("dashForReal");
             RegisterForce(0.5f,false);
         }
 
