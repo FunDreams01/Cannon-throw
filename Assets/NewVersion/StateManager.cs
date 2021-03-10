@@ -11,7 +11,8 @@ using UnityEngine;
         CATCH,
         SHOOTING,
         FLYING,
-        MENU_SCREEN
+        WIN_SCREEN,
+        LOSE_SCREEN            
     }
 
 public class StateManager : MonoBehaviour
@@ -32,9 +33,15 @@ public class StateManager : MonoBehaviour
         cam = FindObjectOfType<CamControl>();
     }
 
-    void Update()
+    public void Win()
     {
-        
+        StartState(States.WIN_SCREEN);
+    }
+
+
+    public void Lose()
+    {
+        StartState(States.LOSE_SCREEN);
     }
     //This is called from the Interface Manager. It converts the state from WELCOME_SCREEN to IN_CANNON
     public  void StartGame(){

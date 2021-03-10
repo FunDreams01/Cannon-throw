@@ -153,8 +153,10 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
                 float MoveX = CharMovePastMultiplier * MoveExtent * 2 * ((Input.mousePosition.x / Screen.width) - 0.5f);
 
                 ////DEBUG ONLY///
+                if(Application.isEditor){
                 MoveX = Mathf.Max(MoveX, -MoveExtent);
                 MoveX = Mathf.Min(MoveX, MoveExtent);
+                }
                 if ((MoveX < 0 && ((Curblock & BLOCKED.LEFT) != BLOCKED.LEFT)) || (MoveX > 0 && (Curblock & BLOCKED.RIGHT) != BLOCKED.RIGHT) || MoveX == 0)
                     IdealSidePos = side * MoveX;
             }
@@ -167,6 +169,8 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
                     {
                         Debug.Log("CharCatch");
                         SM.CannonCatch(PM.EndCannon, this);
+                        anim.SetTrigger("shoot");
+                        stop = true;
                     }
                     else
                     {
@@ -235,7 +239,7 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
     }
 void Die()
 {
-    
+
 }
     IEnumerator Spin()
     {

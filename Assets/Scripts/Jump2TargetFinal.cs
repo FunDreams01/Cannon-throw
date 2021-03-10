@@ -54,6 +54,7 @@ public class Jump2TargetFinal : MonoBehaviour {
             transform.position = TargetTransform.position;
             projectileOnMotion = false;
             Debug.Log("Done");
+            FindObjectOfType<StateManager>().Win();
             t = true;
             return;
         }
