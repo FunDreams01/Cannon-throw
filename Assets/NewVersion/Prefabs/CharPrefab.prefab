@@ -94,7 +94,8 @@ MonoBehaviour:
   NozzleDistance: 0
   LastCannonDistance: 0
   RunDiff: 1.5
-  StaminaDepletion: 0.18
+  MercyForStaminaEnd: -0.15
+  StaminaDepletion: 0.14
   StaminaFill: 0.28
   RingStaminaMultiplier: 0.4
 --- !u!54 &1269208921679612350

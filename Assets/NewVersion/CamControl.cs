@@ -72,7 +72,8 @@ public class CamControl : MonoBehaviour
         yield return new WaitForSeconds(3.2f);
         AwayCam.gameObject.SetActive(false);
     }
-    public void AwayView()
+    bool hole = false;
+        public void AwayView()
     {
         StartCoroutine(Away());
     }
@@ -81,12 +82,24 @@ public class CamControl : MonoBehaviour
         HoleCam.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.3f);
         HoleCam.gameObject.SetActive(false);
+        hole=false;
     }
 
     public void HoleLook()
     {
-        StartCoroutine(HoleRoutine());
+//        if(!hole)StartCoroutine(HoleRoutine());
+        if(!hole)
+        HoleCam.gameObject.SetActive(true);
+        hole=true;
     } 
+
+    public void AntiHoleLook()
+    {
+
+        if(hole)
+        HoleCam.gameObject.SetActive(false);
+        hole=false;
+    }
     
 }
 

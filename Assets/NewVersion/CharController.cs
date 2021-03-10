@@ -163,6 +163,8 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
             float angle;
             bool isHole = false;
             CurPosVec.y += PM.GetHeight(CurPos, ref CurrentHeight, ref CurrentNodeIndex, out angle, out isHole);
+            if(isHole) cam.HoleLook();else cam.AntiHoleLook();
+
 
 
             if (CurPos < PM.End - (LastCannonDistance))
