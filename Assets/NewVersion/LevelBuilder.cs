@@ -216,7 +216,7 @@ public class LevelBuilder : MonoBehaviour
         Char.NozzleDistance = CannonNozzleDistance;
         Char.MoveExtent = CharMovementExtent;
         FindObjectOfType<StateManager>().CC = Char;
-        FindObjectOfType<CamControl>().AssignCharToCam();
+        FindObjectOfType<CamControl>().AssignCharToCam(Char.transform);
         FindObjectOfType<CharController>().GetComponent<Jump2TargetFinal>().TargetTransform = Pool.transform;
         return Char;
     }

@@ -17,8 +17,7 @@ public class CamControl : MonoBehaviour
     void Awake(){
         CB = GetComponent<CinemachineBrain>();
     }
-    public void AssignCharToCam(){
-        Transform ch = FindObjectOfType<CharController>().transform;
+    public void AssignCharToCam(Transform ch){
         CV1.Follow = ch;
         CV1.LookAt = ch; 
         CV2.Follow = ch; 

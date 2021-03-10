@@ -67,7 +67,10 @@ public class CharController : MonoBehaviour
         FORWARD = 8
     }
     BLOCKED Curblock = BLOCKED.NONE;
+    Material mat;
     public float RunDiff = 5f;
+
+    public float MercyForStaminaEnd = -0.15f;
 
     bool spin = false;
  Image StaminaBar;
@@ -77,7 +80,14 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
     {
         SM = FindObjectOfType<StateManager>();
         anim = GetComponentInChildren<Animator>();
+        
         cam = FindObjectOfType<CamControl>();
+        SkinnedMeshRenderer smr = GetComponentInChildren<SkinnedMeshRenderer>();
+        mat = new Material(smr.sharedMaterial);
+        foreach( SkinnedMeshRenderer s in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            s.material = mat;
+        }
     }
 
 
@@ -111,6 +121,14 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
 
     public void Update()
     {
+        if(dead)
+        {
+            CurPos+= CharSpeedForward * Time.deltaTime;
+            if(CurPos < PM.End-NozzleDistance)
+            go.transform.position += CharSpeedForward*Time.deltaTime*PM.Direction;
+            return;
+        }
+
         if (CharSpeedForward > CharBaseSpeed)
         {
             CharSpeedForward = Mathf.Max(CharBaseSpeed, CharSpeedForward - CharSlowdown * Time.deltaTime);
@@ -174,7 +192,7 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
                     }
                     else
                     {
-                        GetComponent<Jump2TargetFinal>().Project();
+                        GetComponent<Jump2TargetFinal>().Project(true);
                         SM.CannonCatch(null, this);
                         anim.SetTrigger("shoot");
                         stop = true;
@@ -234,12 +252,36 @@ public float StaminaDepletion = 0.12f, StaminaFill = 0.25f, RingStaminaMultiplie
         }
         
         StaminaBar.fillAmount = CurrentStamina;
+        if(CurrentStamina <= 0.333333f)
+        {
+            float norm = Mathf.Max(CurrentStamina*3,0);
+            mat.color = new Color(1f,norm*norm,norm*norm);
+            if(CurrentStamina <= MercyForStaminaEnd)
+            {
+                Die();
+            }
+        }
+        else{mat.color = Color.white;}
 
 
     }
+    bool dead = false;
+    GameObject go;
 void Die()
 {
+    stop=true;
+    dead = true;
+    go = new GameObject();
+    go.transform.position = transform.position;
+    go.transform.rotation= transform.rotation;
 
+    var go2 = Instantiate(go);
+    go2.transform.position += 90*PM.Direction;
+    go2.transform.position += 20*Vector3.down;
+    
+    GetComponent<Jump2TargetFinal>().TargetTransform = go2.transform;
+    GetComponent<Jump2TargetFinal>().Project(false);
+    cam.AssignCharToCam(go.transform);
 }
     IEnumerator Spin()
     {

@@ -17,7 +17,9 @@ public class Jump2TargetFinal : MonoBehaviour {
     void Start () {
       //  Project ();
     }
-    public void Project () {
+    bool win;
+    public void Project (bool win) {
+        this.win = win;
         initPosition = transform.position;
         HorizontalSpeed=GetComponent<CharController>().CharSpeedForward;
         // Velocity is gets its direction from the difference between the target and the current position. 
@@ -54,7 +56,8 @@ public class Jump2TargetFinal : MonoBehaviour {
             transform.position = TargetTransform.position;
             projectileOnMotion = false;
             Debug.Log("Done");
-            FindObjectOfType<StateManager>().Win();
+            if(win)FindObjectOfType<StateManager>().Win();
+            if(!win)FindObjectOfType<StateManager>().Lose();
             t = true;
             return;
         }
