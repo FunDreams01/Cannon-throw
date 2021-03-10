@@ -9,29 +9,42 @@ public class CamControl : MonoBehaviour
     public CinemachineVirtualCamera CV1;
     public CinemachineVirtualCamera CV2;
     public CinemachineVirtualCamera CV3;
+    public CinemachineVirtualCamera CV7;
     public CinemachineVirtualCamera HoleCam;
+    public CinemachineVirtualCamera FirstCam;
+    public CinemachineVirtualCamera AwayCam;
     
     void Awake(){
         CB = GetComponent<CinemachineBrain>();
     }
     public void AssignCharToCam(){
-        CV1.Follow = FindObjectOfType<CharController>().transform;
-        CV1.LookAt = FindObjectOfType<CharController>().transform;
-        CV2.Follow = FindObjectOfType<CharController>().transform;
-        CV2.LookAt = FindObjectOfType<CharController>().transform;
-        CV3.Follow = FindObjectOfType<CharController>().transform;
-        CV3.LookAt = FindObjectOfType<CharController>().transform;
-        HoleCam.Follow = FindObjectOfType<CharController>().transform;
-        HoleCam.LookAt = FindObjectOfType<CharController>().transform;
+        Transform ch = FindObjectOfType<CharController>().transform;
+        CV1.Follow = ch;
+        CV1.LookAt = ch; 
+        CV2.Follow = ch; 
+        CV2.LookAt = ch; 
+        CV3.Follow = ch; 
+        CV3.LookAt = ch; 
+        CV7.Follow = ch; 
+        CV7.LookAt = ch; 
+        FirstCam.Follow = ch; 
+        FirstCam.LookAt = ch; 
+        HoleCam.Follow = ch; 
+        HoleCam.LookAt = ch; 
+        AwayCam.Follow = ch; 
+        AwayCam.LookAt = ch; 
     }
+    
     
     public void ZoomIn()
     {
         CV2.gameObject.SetActive(true);
         CV1.gameObject.SetActive(false);
+        CV7.gameObject.SetActive(false);
     }
     public void SideView()
     {
+        FirstCam.gameObject.SetActive(false);
         StartCoroutine(SideWait());
     }
     IEnumerator SideWait()
@@ -39,6 +52,30 @@ public class CamControl : MonoBehaviour
         CV3.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.3f);
         CV3.gameObject.SetActive(false);
+    }
+    IEnumerator assign(Transform go)
+    {
+        yield return new WaitForSeconds(1.5f);
+        AwayCam.Follow = go; 
+        AwayCam.LookAt = go; 
+    }
+    
+    public void AssignAwayCamObject(Transform go)
+    {
+        StartCoroutine(assign(go));
+    }
+
+    IEnumerator Away()
+    {
+        AwayCam.gameObject.SetActive(true);
+        CV2.gameObject.SetActive(false);
+        CV7.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3.2f);
+        AwayCam.gameObject.SetActive(false);
+    }
+    public void AwayView()
+    {
+        StartCoroutine(Away());
     }
 
     IEnumerator HoleRoutine(){

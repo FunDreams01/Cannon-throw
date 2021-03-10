@@ -15,11 +15,11 @@ public class Jump2TargetFinal : MonoBehaviour {
     float initVerticalVelocity, VerticalDistance;
     bool projectileOnMotion = false;
     void Start () {
-        Project ();
+      //  Project ();
     }
-    void Project () {
+    public void Project () {
         initPosition = transform.position;
-        HorizontalSpeed=GameManager.Instance.GetSpeed ();
+        HorizontalSpeed=GetComponent<CharController>().CharSpeedForward;
         // Velocity is gets its direction from the difference between the target and the current position. 
         // The initial magnitude/norm of the velocity is HorizontalSpeed.    
         Vector3 Trajectory = (TargetTransform.position - transform.position);
@@ -40,20 +40,21 @@ public class Jump2TargetFinal : MonoBehaviour {
         */
         initVerticalVelocity = (0.5f * Gravity * maxTime * maxTime - VerticalDistance) / maxTime;
         projectileOnMotion = true;
-
+        
     }
     bool t = false;
     //You can also call this is FixedUpdate(), 
     void Update () {
         //If the motion is marked complete, stop checking for anything.
         if (!projectileOnMotion) return;
+        Debug.Log(Time.time - initTime);
+        Debug.Log(maxTime);
         //If the time is past the predicted latest time, mark completed, and equal the position to Target to be 100% accurate.
         if (Time.time - initTime >= maxTime) {
             transform.position = TargetTransform.position;
             projectileOnMotion = false;
             Debug.Log("Done");
             t = true;
-            Debug.Break();
             return;
         }
         if(t) Debug.Log("Still");

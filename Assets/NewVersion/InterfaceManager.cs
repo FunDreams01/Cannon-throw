@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class InterfaceManager : MonoBehaviour
 {
@@ -8,6 +10,12 @@ public class InterfaceManager : MonoBehaviour
     StateManager SM;
     public ScreenDesignator[] Screens;
     HitIndicatorController HIC;
+
+    public TextMeshProUGUI Curr,Prev,Coin;
+    public Image ProgBar,StaminaBar;
+
+    
+
     void Awake()
     {
         HIC = FindObjectOfType<HitIndicatorController>();
@@ -25,6 +33,19 @@ public class InterfaceManager : MonoBehaviour
            Screen.gameObject.SetActive(Screen.ScreenState == NewState);
         }
     }
+
+
+    public void RegisterCoin(int coin)
+    {
+        Coin.text = coin.ToString();
+    }
+
+
+    public void RegisterProgress(float normalizedProgress)
+    {
+        ProgBar.fillAmount = normalizedProgress;
+        
+    }
     //This function is just here so that the UI only interacts through the InterfaceManager.
     //This void is called from the "Tap To Play" Button.
     public void CallGameStart(){
@@ -35,5 +56,6 @@ public class InterfaceManager : MonoBehaviour
     {
         SM.CanonGoBOOM(HIC.GetNormalizedForce());
     }
+    
 
 }

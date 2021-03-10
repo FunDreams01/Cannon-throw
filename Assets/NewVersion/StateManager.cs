@@ -8,6 +8,7 @@ using UnityEngine;
  public enum States {
         WELCOME_SCREEN,
         IN_CANNON,
+        CATCH,
         SHOOTING,
         FLYING,
         MENU_SCREEN
@@ -18,14 +19,17 @@ public class StateManager : MonoBehaviour
    
     States GameState = States.WELCOME_SCREEN;
     public PathManager CurrentPath;
+    CamControl cam;
 
     //Managers
-    InterfaceManager IM;
+    [HideInInspector]
+    public InterfaceManager IM;
     public CharController CC;
     void Awake()
     {
         IM = GetComponent<InterfaceManager>();
         CC = FindObjectOfType<CharController>();
+        cam = FindObjectOfType<CamControl>();
     }
 
     void Update()
@@ -34,21 +38,26 @@ public class StateManager : MonoBehaviour
     }
     //This is called from the Interface Manager. It converts the state from WELCOME_SCREEN to IN_CANNON
     public  void StartGame(){
-        if(GameState == States.WELCOME_SCREEN)
+        if(GameState == States.WELCOME_SCREEN || GameState == States.CATCH)
         {
             StartState(States.IN_CANNON);
         }
+        
+    }
+    
+    public void CannonCatch(CannonControl cannon,CharController ch)
+    {
+        StartState(States.CATCH);
+        //ch.transform.SetParent(cannon.transform); Debug.Log("ch:" + ch.name + " " + cannon.name);
+        if(cannon!=null)
+        cannon.Catch();
+        cam.AwayView();
     }
 
     void StartState(States State)
     {
         //UI Objects.
         IM.SwichToState(State, GameState);
-        
-       
-
-
-
         GameState = State;
         Debug.Log("State Started:" + State.ToString());
     }
@@ -56,6 +65,7 @@ public class StateManager : MonoBehaviour
     //I couldn't think of a name :/
     public void CanonGoBOOM(float CharacterForce){
 
+        cam.SideView();
         CurrentPath.StartCannon.Shoot();
         CC.RegisterForce(CharacterForce);
         StartState(States.SHOOTING);

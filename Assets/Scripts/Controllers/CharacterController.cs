@@ -89,6 +89,8 @@
         }
         // Start is called before the first frame update
         void Start () {
+            
+            return;
             rb = GetComponent<Rigidbody> ();
             stopForce = false;
             body = this.transform.Find ("body").gameObject;
@@ -119,6 +121,7 @@
 
         // Update is called once per frame
         void FixedUpdate () {
+            return;
             if (inCanon) {
                 resetCanon ();
             }
